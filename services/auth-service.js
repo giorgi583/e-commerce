@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { UserSchema: User } = require('../models/auth-schema');
 const { userInfoSchema: userInfo } = require('../models/userInfo');
+const { CartSchema: Cart } = require('../models/cart-schema')
 const dotenv = require('dotenv');
 const { validationResult } = require('express-validator');
 dotenv.config({ path: './.env' , quiet: true });
@@ -47,6 +48,7 @@ if (!userInfoValidationResult.success) {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({ username, email, password: hashedPassword, role });
         const newuserInfo = await userInfo.create({ firstName, lastName, contactNumber, userId: user.id });
+        const newCart = await Cart.create({userId: user.id})
         if(!user || !userInfo) {
             throw new Error('User not created');
         }
@@ -119,12 +121,25 @@ return ress.status(500).json({success: false, message: err.message});
    }
 }
 
-
+const deleteUserAccount = async (req, res) => {
+    const userId = req.user.id;
+    try {
+        const user = await User.findByPk(userId);
+        if(!user) {
+            return res.status(404).json({success: false, message: 'User not found'});
+        }
+        await user.destroy();
+        res.status(200).json({success: true, message: 'User deleted successfully'});
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message});
+    }
+}
 
 module.exports = {
     register,
     login,
     getMe,
     logout,
-    changePassword
+    changePassword,
+    deleteUserAccount
 };

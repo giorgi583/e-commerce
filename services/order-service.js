@@ -1,6 +1,7 @@
 const {z} = require('zod');
-const {Order} = require('../models/orders-schema');
-const {OrderItem} = require('../models/order-itmes-schema');
+const {sequelize} = require('../utils/db');
+const {OrderSchema: Order} = require('../models/orders-schema');
+const {OrderItemSchema: OrderItem} = require('../models/order-itmes-schema');
 const orderItemSchema = z.object({
     productId: z.number(),
     quantity: z.number().positive(),
@@ -40,13 +41,14 @@ async function getOneOrder (req, res) {
     const orderId = req.params.id;
     try {
         const order = await Order.findByPk(orderId);
+        const orderItems = await OrderItem.findAll({where: {orderId}});
         if(!order) {
             return res.status(404).json({success: false, message: 'Order not found'});
         }
         if(order.userId !== userId) {
             return res.status(403).json({success: false, message: 'Access denied. Insufficient permissions.'});
         }
-        res.status(200).json({success: true, message: 'Order found', data: order});
+        res.status(200).json({success: true, message: 'Order found', data: order, orderItems});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }
@@ -63,6 +65,7 @@ async function getAllOrders (req, res) {
     }
 }
 async function createOrder (req, res) {
+    const t = await sequelize.transaction();
     const userId = req.user.id;
     const validOrder = orderSchema.safeParse(req.body);
     if(!validOrder.success) {
@@ -125,12 +128,24 @@ async function updateOrderStatus (req, res) {
         res.status(500).json({success: false, message: 'an unexpected error occurred'});
     }
 }
-
+async function getAnyOrder (req, res) {
+    const orderId = req.params.id;
+    try {
+        const order = await Order.findByPk(orderId);
+        if(!order) {
+            return res.status(404).json({success: false, message: 'Order not found'});
+        }
+        res.status(200).json({success: true, message: 'Order found', data: order});
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message});
+    }
+}
 module.exports = {
     getAllOrders,
     createOrder,
     cancelOrder,
     updateOrderStatus,
     getMyOrders,
-    getOneOrder
+    getOneOrder,
+    getAnyOrder
 }

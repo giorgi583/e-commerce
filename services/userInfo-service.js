@@ -47,9 +47,9 @@ async function getAllUserInfo (req, res) {
     try {
         const AlluserInfo = await userInfo.findAll();
         if(!AlluserInfo) {
-            return res.status(404).json({success: false, message: 'User info not found'});
+            return res.status(404).json({success: false, message: 'Users info not found'});
         }
-        res.status(200).json({success: true, message: 'User info found', AlluserInfo});
+        res.status(200).json({success: true, message: 'Users info found', AlluserInfo});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }
