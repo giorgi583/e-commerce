@@ -28,7 +28,7 @@ async function updateUserInfo(req, res) {
     const userId = req.user.id;
     const userInfoValidationResult = userInfoValidation.partial().safeParse(req.body);
     if(!userInfoValidationResult.success) {
-        return res.status(400).json({success: false, message: 'Invalid user info'});
+        return res.status(400).json({success: false, message: 'Invalid input'});
     }
     try {
         
@@ -37,7 +37,7 @@ async function updateUserInfo(req, res) {
             return res.status(404).json({success: false, message: 'User info not found'});
         }
         const updateduserInfo = await myuserInfo.update({ ...userInfoValidationResult.data });
-        res.status(200).json({success: true, message: 'User info updated', updateduserInfo});
+        res.status(200).json({success: true, message: 'User info updated successfully', updateduserInfo});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }

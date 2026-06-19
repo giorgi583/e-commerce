@@ -12,7 +12,7 @@ authRouter.put('/me/user-info', authenticate, updateUserInfo);
 authRouter.get('/me/user-info', authenticate, getUserInfo);
 authRouter.get('/user-info', authenticate, authorize('admin'), getAllUserInfo);
 authRouter.put('/me/change-password', authenticate, validateChangePassword, changePassword);
-authRouter.delete('/me', authenticate, deleteUserAccount);
+authRouter.delete('/me/delete-account', authenticate, deleteUserAccount);
 
 
 module.exports = authRouter

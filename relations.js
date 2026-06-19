@@ -5,6 +5,7 @@ const { userInfoSchema: userInfo } = require('./models/userInfo');
 const { CartSchema: Cart } = require('./models/cart-schema');
 const { CartItemSchema: CartItem } = require('./models/cart-schema');
 const { ProductSchema: Product } = require('./models/products-schema');
+const { ReviewSchema: Review } = require('./models/reviews-schema');
 
 Order.hasMany(OrderItem, { foreignKey: 'orderId', as: 'items', onDelete: 'CASCADE' });
 OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
@@ -24,6 +25,9 @@ CartItem.belongsTo(Cart, { foreignKey: 'cartId' });
 CartItem.belongsTo(Product, { foreignKey: 'productId' });
 Product.hasMany(CartItem, { foreignKey: 'productId' });
 
+Product.hasMany(Review, { foreignKey: 'productId', as: 'reviews', onDelete: 'CASCADE' });
+Review.belongsTo(Product, { foreignKey: 'productId' });
+
 module.exports = {
     Order,
     OrderItem,
@@ -31,5 +35,6 @@ module.exports = {
     userInfo,
     Cart,
     CartItem,
-    Product
+    Product,
+    Review
 }

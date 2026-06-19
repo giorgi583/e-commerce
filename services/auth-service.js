@@ -59,21 +59,25 @@ if (!userInfoValidationResult.success) {
 };  
 
 const login = async (req, res) => {
+    const validLogin = loginSchema.safeParse(req.body);
+    if (!validLogin.success) {
+        return res.status(400).json({ success: false, message: validLogin.error.errors });
+    }
     try {
-        const { email, password, role } = loginSchema.parse(req.body);
+        const { email, password, role } = req.body;
         const user = await User.findOne({ where: { email } });
         if (!user) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ success: false, message: 'Invalid email or password' });
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ success: false, message: 'Invalid email or password' });
         }
         const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login successful', token });
+        res.status(200).json({ success: true, message: 'Login successful', token });
     } catch (error) {
         console.error(error);
-        res.status(400).json({ message: error.message });
+        res.status(400).json({success: false, message: error.message });
     }
 };
 const getMe = async (req, res) => {

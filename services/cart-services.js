@@ -4,8 +4,7 @@ const { ProductSchema: Product} = require('../models/products-schema')
 
 const cartItemValidation = z.object({
     productId: z.number().positive(),
-    quantity: z.number().positive(),
-    unitPrice: z.number().positive(),
+    quantity: z.number().positive()
 });
 
 async function addToCart (req, res) {
@@ -14,8 +13,12 @@ async function addToCart (req, res) {
     if(!validation.success) {
         return res.status(400).json({success: false, message: validation.error.issues});
     }
-    const {productId, quantity, unitPrice} = validation.data;
+    const {productId, quantity} = validation.data;
     try {
+        const product = await Product.findOne({where: {id: productId}});
+        if(!product) {
+            return res.status(404).json({success: false, message: 'Product not found'});
+        }
     const cart = await Cart.findOne({where: {userId}});
     if(!cart) {
         return res.status(404).json({success: false, message: 'Cart not found'});
@@ -25,7 +28,7 @@ async function addToCart (req, res) {
         cartItem.quantity += quantity;
         await cartItem.save();
     } else {
-        await CartItem.create({cartId: cart.id, productId, quantity, unitPrice});
+        await CartItem.create({cartId: cart.id, productId, quantity, unitPrice: product.price});
     }
     res.status(200).json({success: true, message: 'Item added to cart'}); }
     catch (error) {

@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const { sequelize } = require('./utils/db');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger/swagger.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 require('dotenv').config({ path: './.env' , quiet: true });
 require('./relations')  
@@ -10,12 +14,14 @@ const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const cartRoutes = require('./routes/cart');
+const reviewRoutes = require('./routes/reviews');
 
 // Use routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 // Test database connection and sync models
 sequelize.sync({ alter: true })
