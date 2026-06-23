@@ -96,11 +96,12 @@ async function updateProduct(req, res) {
         return res.status(400).json({success: false, message: 'Product id is required'});
     }
     try {
-const updatedProduct = await ProductSchema.update(validProduct.data, {where: {id: productId}});
-        if(!updatedProduct) {
-            throw new Error('Product not updated');
+        const product = await ProductSchema.findByPk(productId);
+        if(!product) {
+            return res.status(404).json({success: false, message: 'Product not found'});
         }
-        res.status(200).json({success: true, message: 'Product updated', updatedProduct});
+  await product.update(validProduct.data);
+        res.status(200).json({success: true, message: 'Product updated', product});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }
@@ -116,7 +117,7 @@ async function deleteProduct(req, res) {
         if(!deletedProduct) {
            return res.status(404).json({success: false, message: 'Product not found'});
         }
-        res.status(200).json({success: true, message: 'Product deleted'});
+        res.status(204).json({success: true, message: 'Product deleted'});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }

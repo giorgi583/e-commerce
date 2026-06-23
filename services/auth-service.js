@@ -65,9 +65,9 @@ const login = async (req, res) => {
     }
     try {
         const { email, password, role } = req.body;
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { email, role } });
         if (!user) {
-            return res.status(401).json({ success: false, message: 'Invalid email or password' });
+            return res.status(401).json({ success: false, message: 'Invalid input' });
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
@@ -133,7 +133,7 @@ const deleteUserAccount = async (req, res) => {
             return res.status(404).json({success: false, message: 'User not found'});
         }
         await user.destroy();
-        res.status(200).json({success: true, message: 'User deleted successfully'});
+        res.status(204).json({success: true, message: 'User deleted successfully'});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }

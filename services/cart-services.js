@@ -64,7 +64,7 @@ async function deleteCartItem (req, res) {
     if(!deletedcartItem) {
         return res.status(404).json({status: false, message: 'item not found'})
     }
-    res.status(200).json({success: true, message: 'cart item deleted successfully'})
+    res.status(204).json({success: true, message: 'cart item deleted successfully'})
     }
     catch(err) {
         return res.status(500).json({success: false, message: err.message})
@@ -100,7 +100,7 @@ try {
         return res.status(404).json({success: false, message: 'Cart not found'});
     }
     await CartItem.destroy({where: {cartId: cart.id}});
-    res.status(200).json({success: true, message: 'Cart cleared successfully'});
+    res.status(204).json({success: true, message: 'Cart cleared successfully'});
 }
 catch (error) {
     res.status(500).json({success: false, message: error.message});
