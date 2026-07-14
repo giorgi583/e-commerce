@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+
+
+@layer components {
+    button {
+        outline: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        background-color: #835aff;
+        border: 1px solid #835aff;
+        color: white;
+        transition: all 0.2s ease-in-out;
+    }
+
+    button:hover {
+        background-color: #fff;
+        border: 1px solid #835aff;
+        color: #835aff;
+    }
+    input {
+        outline: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.4rem;
+        background-color: var(--light-grey);
+    }
+    
+}
+
+:root {
+    --accent: #f98a0a;
+    --secondary: #835aff;   
+    --black: #1e1e1e;
+    --light-grey: #f0f0f0;
+    --dark-grey: #464646;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-170%);
+  }
+}
