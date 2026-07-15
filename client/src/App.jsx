@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 // pages
 const Home = lazy(() => import('./pages/Home'))
 const Login = lazy(() => import('./pages/Login'))
+const Register = lazy(() => import('./pages/Register'))
+const Products = lazy(() => import('./pages/Products'))
 function App() {
 
 
@@ -12,6 +14,8 @@ function App() {
    <Routes>
     <Route path="/" element={<Home />} />
     <Route path='/login' element={<Login />} />
+    <Route path='/register' element={<Register />} />
+    <Route path='/products' element={<Products />} />
    </Routes>
    </BrowserRouter>
    </>

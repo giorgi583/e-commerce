@@ -25,9 +25,40 @@
         border-radius: 0.4rem;
         background-color: var(--light-grey);
     }
-    
+    input[type="range"] {
+  pointer-events: none;
 }
 
+input[type="range"]::-webkit-slider-thumb {
+  pointer-events: auto;
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  cursor: pointer;
+}
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary {
+  list-style: none;
+}
+summary::marker {
+  content: "";
+}
+}
 :root {
     --accent: #f98a0a;
     --secondary: #835aff;   
