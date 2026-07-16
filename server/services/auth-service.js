@@ -17,8 +17,7 @@ const registerSchema = z.object({
 
 const loginSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(6),
-    role: z.enum(['customer', 'admin']).default('customer')
+    password: z.string().min(6)
 });
 const userInfoValidation = z.object({
     firstName: z.string().min(3).max(50),
@@ -38,8 +37,9 @@ const register = async (req, res) => {
 }
 if (!userInfoValidationResult.success) {
    const error = JSON.parse(userInfoValidationResult.error.message);
-  return res.status(400).json({ success: false, message: error});
+  return res.status(400).json({ success: false, message: error[0].message});
 }
+console.log(userInfoValidationResult);
     try {
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
@@ -64,8 +64,8 @@ const login = async (req, res) => {
         return res.status(400).json({ success: false, message: validLogin.error.errors });
     }
     try {
-        const { email, password, role } = req.body;
-        const user = await User.findOne({ where: { email, role } });
+        const { email, password } = req.body;
+        const user = await User.findOne({ where: { email } });
         if (!user) {
             return res.status(401).json({ success: false, message: 'Invalid input' });
         }
@@ -73,7 +73,7 @@ const login = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(401).json({ success: false, message: 'Invalid email or password' });
         }
-        const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id, username: user.username, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.status(200).json({ success: true, message: 'Login successful', token });
     } catch (error) {
         console.error(error);

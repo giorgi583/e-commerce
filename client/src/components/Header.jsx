@@ -1,11 +1,21 @@
 import React from 'react'
-import { Phone, Truck, Map, MenuIcon, Search, User2, ShoppingCart, XIcon, Settings, LogOut, Home, LayoutDashboard, ChevronDown, Shirt} from 'lucide-react'
+import { Phone, Truck, Map, MenuIcon, Search, User2, ShoppingCart, XIcon, Settings, LogOut, Home, LayoutDashboard, ChevronDown, Shirt, LogOutIcon} from 'lucide-react'
 import SearchBar from './Search'
 import { NavLink } from 'react-router-dom'
 import { FaProductHunt } from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from '../slices/userSlice'
+
 const Header = () => {
     const [open, setOpen] = React.useState(false)
     const [navOpen, setNavOpen] = React.useState(false)
+    const user = useSelector(state => state.user)
+    console.log(user?.user)
+    const dispatch = useDispatch()
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        dispatch(logout())
+    }
   return (
     <header className='w-full border-b border-gray-200 shadow sticky top-0 z-50 bg-white'> 
         <div className='bg-[var(--accent)] w-full flex items-center justify-between py-1 px-7 max-lg:text-sm max-md:px-3 max-md:text-xs max-md:hidden'>
@@ -48,7 +58,7 @@ const Header = () => {
                 </div>}
             </div>
             <div className='flex items-center gap-5 '>
-                <NavLink to={'/login'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>Login</NavLink>
+               {user.user ? <div className='flex items-center gap-3'><NavLink to={'/profile'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>{user?.user?.username}</NavLink> <button onClick={handleLogout} className='flex items-center max-sm:text-xs bg-transparent border text-black border-gray-200 p-3 rounded-full cursor-pointer'><LogOutIcon className='inline mr-2 size-4 max-sm:size-3'/> Logout</button></div> : <NavLink to={'/login'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>Login</NavLink>}
             </div>
         </div>
         <div className='fixed bottom-0 border-t bg-white border-gray-200 w-full text-[var(--accent)] z-40 p-3 flex items-center justify-evenly md:hidden'>

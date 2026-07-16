@@ -4,6 +4,7 @@ import Categories from '../components/Categories'
 import Brands from '../components/Brands'
 import Slider from '../components/Slider'
 import Footer from '../components/Footer'
+import Loader from '../components/Loader'
 const Home = () => {
   return (
     <>

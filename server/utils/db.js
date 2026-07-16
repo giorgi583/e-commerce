@@ -12,15 +12,13 @@ const sequelize = new Sequelize(
         port: process.env.DB_PORT,
         dialect: 'postgres',
         logging: false, 
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false
-            }
-        }
+        
     }
 );
-
+console.log(process.env.DB_NAME);
+console.log(process.env.DB_HOST);
+console.log(process.env.DB_PORT);
+console.log(sequelize.config);
 
 module.exports = {
     sequelize
