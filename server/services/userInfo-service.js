@@ -4,11 +4,11 @@ const {userInfoSchema: userInfo} = require('../models/userInfo');
 const userInfoValidation = z.object({
     firstName: z.string().min(3).max(50),
     lastName: z.string().min(3).max(50),
-    avatar: z.string().optional(),
-    bio: z.string().optional(),
+    avatar: z.string().nullable().optional(),
+    bio: z.string().nullable().optional(),
     contactNumber: z.string(),
-    address: z.string().optional(),
-    gender: z.string().optional()
+    address: z.string().nullable().optional(),
+    gender: z.string().nullable().optional()
 });
 
 async function getUserInfo(req, res) {
@@ -25,9 +25,12 @@ async function getUserInfo(req, res) {
 }
 
 async function updateUserInfo(req, res) {
+    console.log(req.body);
     const userId = req.user.id;
     const userInfoValidationResult = userInfoValidation.partial().safeParse(req.body);
     if(!userInfoValidationResult.success) {
+        const error = JSON.parse(userInfoValidationResult.error.message);
+        console.log(error);
         return res.status(400).json({success: false, message: 'Invalid input'});
     }
     try {

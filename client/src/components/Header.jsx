@@ -1,5 +1,5 @@
 import React from 'react'
-import { Phone, Truck, Map, MenuIcon, Search, User2, ShoppingCart, XIcon, Settings, LogOut, Home, LayoutDashboard, ChevronDown, Shirt, LogOutIcon} from 'lucide-react'
+import { Phone, Truck, Map, MenuIcon, Search, User2, ShoppingCart, XIcon, Settings, LogOut, Home, LayoutDashboard, ChevronDown, Shirt, LogOutIcon, Package} from 'lucide-react'
 import SearchBar from './Search'
 import { NavLink } from 'react-router-dom'
 import { FaProductHunt } from 'react-icons/fa'
@@ -50,17 +50,25 @@ const Header = () => {
             <div className=' min-w-100 max-md:hidden max-w-120 max-xl:max-w-80 max-xl:min-w-0 max-md:max-w-60  max-sm:max-w-50 '> <SearchBar /> </div>
             </div>
             <div className='flex items-center gap-5 relative'>
-                <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'>Navigation <ChevronDown className='inline size-5'/></div>
-               {navOpen && <div className='absolute top-[100%] left-0 border border-gray-200 rounded-2xl flex flex-col gap-2 bg-white p-5'>
+              {user?.user?.role !== 'admin' &&  <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'>Navigation <ChevronDown className='inline size-5'/></div>
+              } {user?.user?.role !== 'admin' && navOpen && <div className='absolute top-[100%] left-0 border border-gray-200 rounded-2xl flex flex-col gap-2 bg-white p-5'>
                 <NavLink to={'/products'} className='flex items-center max-md:hidden p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><Shirt className='inline mr-2 size-5'/> Products</NavLink>
             <NavLink to={'/categories'} className='flex items-center border border-gray-200 p-3 rounded-full max-md:hidden cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><LayoutDashboard className='inline mr-2 size-5'/> Categories</NavLink>
                 <NavLink to={'/cart'} className='flex items-center max-md:hidden gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><ShoppingCart className='inline size-5 max-sm:size-4'/>Cart</NavLink>
+                </div>}
+                {
+                 user?.user?.role === 'admin' && <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'>Admin panel</div>   
+                }
+                { user?.user?.role === 'admin' && navOpen && <div className='absolute top-[100%] left-0 border border-gray-200 rounded-2xl flex flex-col gap-2 bg-white p-5'>
+                <NavLink to={'/admin/products'} className='flex items-center max-md:hidden p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><Shirt className='inline mr-2 size-5'/> Products</NavLink>
+            <NavLink to={'/admin/users'} className='flex items-center border border-gray-200 p-3 rounded-full max-md:hidden cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><User2 className='inline mr-2 size-5'/> Users</NavLink>
+                <NavLink to={'/admin/orders'} className='flex items-center max-md:hidden gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><Package className='inline size-5 max-sm:size-4'/>Orders</NavLink>
                 </div>}
             </div>
             <div className='flex items-center gap-5 '>
                {user.user ? <div className='flex items-center gap-3'><NavLink to={'/profile'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>{user?.user?.username}</NavLink> <button onClick={handleLogout} className='flex items-center max-sm:text-xs bg-transparent border text-black border-gray-200 p-3 rounded-full cursor-pointer'><LogOutIcon className='inline mr-2 size-4 max-sm:size-3'/> Logout</button></div> : <NavLink to={'/login'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>Login</NavLink>}
             </div>
-        </div>
+        </div> 
         <div className='fixed bottom-0 border-t bg-white border-gray-200 w-full text-[var(--accent)] z-40 p-3 flex items-center justify-evenly md:hidden'>
             <div className='flex flex-col items-center justify-center'><Home className='inline mr-2 size-5'/>Home</div>
             <div className='flex flex-col items-center justify-center'><LayoutDashboard className='inline mr-2 size-5'/>Categories</div>

@@ -5,8 +5,9 @@ import Pagination from '../components/Pagination'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Filters from '../components/Filters'
-
-const Products = () => {
+import { useNavigate } from 'react-router-dom'
+const Products = ({user}) => {
+  const navigate = useNavigate()
   const [sortingOpen, setSortingOpen] = React.useState(false)
   const [currentPage, setCurrentPage] = React.useState(1)
   return (
@@ -20,6 +21,7 @@ const Products = () => {
       <div className='col-span-3 flex flex-col gap-5'>
        <div className='flex items-center justify-between'> 
         <h1 className='text-2xl font-bold text-[var(--accent)]'>Products</h1> 
+        {user === 'admin' && <button onClick={() => navigate('/add-product')} className=' py-2 px-4 rounded-lg'>Add Product</button>}
         <div  className='relative w-[200px]'>
           <div onClick={() => setSortingOpen(!sortingOpen)} className='flex items-center relative bg-[var(--light-grey)] max-w-fit rounded-full py-2 px-3 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.1)] shadow-amber-500'>
           <p className='cursor-pointer flex items-center gap-2'>Sort <ChevronDown className={sortingOpen ? 'rotate-180 transition-all duration-300' : 'transition-all duration-300'} size={20}/></p>

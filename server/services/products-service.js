@@ -1,5 +1,6 @@
 const {z} = require('zod');
 const {ProductSchema} = require('../models/products-schema');
+const {sequelize} = require('../utils/db');
 const {Op} = require('sequelize');
 
 const productValidator = z.object({
@@ -9,7 +10,6 @@ const productValidator = z.object({
     stock: z.number().positive(),
     discountedPrice: z.number().positive().nullable(),
     quantity: z.number(),
-    image: z.string().optional(),
     category: z.string(),
     brand: z.string(),
     rating: z.number().optional(),
@@ -107,6 +107,31 @@ async function updateProduct(req, res) {
     }
 }
 
+async function getCategories(req, res) {
+    try {
+        const categories = await ProductSchema.findAll({ attributes: [
+    [sequelize.fn('DISTINCT', sequelize.col('category')), 'category']
+  ]});
+        if(!categories) {
+            return res.status(404).json({success: false, message: 'Categories not found'});
+        }
+        res.status(200).json({success: true, message: 'Categories retrieved successfully', categories});
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message});
+    }
+}
+async function getProductsByCategory(req, res) {
+    const category = req.params.category;
+    try {
+        const products = await ProductSchema.findAll({where: {category}});
+        if(!products) {
+            return res.status(404).json({success: false, message: 'Products not found'});
+        }
+        res.status(200).json({success: true, message: 'Products retrieved successfully', products});
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message});
+    }
+}
 async function deleteProduct(req, res) {
     const productId = req.params.id;
     if(!productId) {
@@ -127,5 +152,7 @@ module.exports = {
     createProduct,
     getOneProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getCategories,
+    getProductsByCategory
 }

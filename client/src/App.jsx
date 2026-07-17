@@ -11,6 +11,9 @@ const Products = lazy(() => import('./pages/Products'))
 const Profile = lazy(() => import('./pages/Profile'))
 // components
 import Loader from './components/Loader'
+import AddProduct from './pages/AddProduct'
+import Categories from './pages/Categories'
+import ProductsByCategory from './pages/ProductsByCategory'
 function App() {
   const user = useSelector(state => state.user)
 const apiUrl = import.meta.env.VITE_API_URL
@@ -57,7 +60,11 @@ useEffect(() => {
     <Route path="/" element={<Home />} />
     <Route path='/login' element={<Login getUser={getUser}/>} />
     <Route path='/register' element={<Register />} />
-    <Route path='/products' element={<Products />} />
+    <Route path='/products' element={<Products user={'customer'}/>} />
+    <Route path='/categories' element={<Categories/>} />
+    <Route path='/categories/:category' element={<ProductsByCategory />} />
+    <Route path='/admin/products' element={<Products user={'admin'}/>} />
+    <Route path='/add-product' element={<AddProduct />} />
     <Route path='/profile' element={<Profile />} />
    </Routes>
     </Suspense>

@@ -41,6 +41,7 @@ const ProductSchema = sequelize.define('products', {
     },
     rating: {
         type: DataTypes.DECIMAL,
+        defaultValue: 0,
         allowNull: false
     }, },
     {

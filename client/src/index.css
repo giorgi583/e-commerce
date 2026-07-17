@@ -23,6 +23,7 @@
         outline: none;
         padding: 0.5rem 1rem;
         border-radius: 0.4rem;
+        border: 2px solid #b5b5b5;
         background-color: var(--light-grey);
     }
     input[type="range"] {
