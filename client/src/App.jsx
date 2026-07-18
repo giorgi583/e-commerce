@@ -14,6 +14,8 @@ import Loader from './components/Loader'
 import AddProduct from './pages/AddProduct'
 import Categories from './pages/Categories'
 import ProductsByCategory from './pages/ProductsByCategory'
+import EditProducts from './pages/EditProducts'
+import AccessDenied from './pages/AccessDenied'
 function App() {
   const user = useSelector(state => state.user)
 const apiUrl = import.meta.env.VITE_API_URL
@@ -50,7 +52,7 @@ async function getUser(){
   }
 }
 useEffect(() => {
-  getUser()
+ getUser()
 },[])
   return (
    <>
@@ -63,8 +65,10 @@ useEffect(() => {
     <Route path='/products' element={<Products user={'customer'}/>} />
     <Route path='/categories' element={<Categories/>} />
     <Route path='/categories/:category' element={<ProductsByCategory />} />
-    <Route path='/admin/products' element={<Products user={'admin'}/>} />
+   <Route path='/admin/products' element={<Products user={'admin'}/>} />
+    <Route path='/access-denied' element={<AccessDenied />} />
     <Route path='/add-product' element={<AddProduct />} />
+    <Route path='/edit-product/:productId' element={<EditProducts />} />
     <Route path='/profile' element={<Profile />} />
    </Routes>
     </Suspense>

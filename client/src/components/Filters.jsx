@@ -104,7 +104,7 @@ const getCategories = async () => {
                 </div>
               </details>
             </div>
-            <div className='flex flex-col gap-5 border-y border-gray-200 py-5'>
+            <div className='flex flex-col gap-5 py-5'>
               <details>
                 <summary className='flex items-center justify-between cursor-pointer text-xl font-bold'>Product name <ChevronDown size={20}/></summary>
                 <div className='flex flex-col gap-2 pt-8 py-2'>

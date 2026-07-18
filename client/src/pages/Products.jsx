@@ -1,11 +1,12 @@
 import React, { useEffect} from 'react'
 import ProductCard from '../components/ProductCard'
-import { ChevronDown, ChevronRight, Home, Shirt } from 'lucide-react'
+import { ChevronDown, ChevronRight, Home, Plus, Shirt } from 'lucide-react'
 import Pagination from '../components/Pagination'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Filters from '../components/Filters'
-import { useNavigate, NavLink } from 'react-router-dom'
+import { useNavigate, NavLink, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 const Products = ({user}) => {
   const navigate = useNavigate()
   const [sortingOpen, setSortingOpen] = React.useState(false)
@@ -20,6 +21,15 @@ const Products = ({user}) => {
   const [sort, setSort] = React.useState('')
   const [order, setOrder] = React.useState('')
 const apiUrl = import.meta.env.VITE_API_URL;
+const user1 = useSelector(state => state.user)
+const location = useLocation()
+useEffect(() => {
+  
+  if(!user1.user && location.pathname === '/admin/products') {
+    navigate('/access-denied')
+  }
+}, [user1, location.pathname, navigate])
+
   const getProducts = async () => {
     try {
       const response = await fetch(`${apiUrl}/products?page=${currentPage}${sort && order ? `&sort=${sort}&order=${order}` : ''}&categories=${checkedCategories.join(',')}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}&name=${name}`);
@@ -34,6 +44,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     getProducts();
   }, [currentPage, sort, order, checkedCategories, brand, minPrice, maxPrice, name]);
+ 
   return (
     <>
     <Header />
@@ -50,7 +61,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
       <div className='col-span-3 flex flex-col gap-5'>
        <div className='flex items-center justify-between'> 
         <h1 className='text-2xl font-bold text-[var(--accent)]'>Products</h1> 
-        {user === 'admin' && <button onClick={() => navigate('/add-product')} className=' py-2 px-4 rounded-lg'>Add Product</button>}
+        {user === 'admin' && <button onClick={() => navigate('/add-product')} className=' py-2 px-4 rounded-lg flex items-center gap-2'><Plus />Add Product</button>}
         <div  className='relative w-[200px] '>
           <div onClick={() => setSortingOpen(!sortingOpen)} className='flex items-center relative bg-[var(--light-grey)] max-w-fit rounded-full py-2 px-3 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.1)] shadow-amber-500'>
           <p className='cursor-pointer flex items-center gap-2'>Sort <ChevronDown className={sortingOpen ? 'rotate-180 transition-all duration-300' : 'transition-all duration-300'} size={20}/></p>
@@ -67,7 +78,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
        </div>
         <div className='grid grid-cols-4 gap-4'>
          {products.map((product, index) => (
-           <ProductCard id={product.id} name={product.name} price={product.discountedPrice} oldPrice={product.price} />
+           <ProductCard id={product.id} name={product.name} price={product.discountedPrice} oldPrice={product.price} user={user} getProducts={getProducts}/>
          ))}
         </div>
         <Pagination pages={pages ? pages : 1} currentPage={currentPage} setCurrentPage={setCurrentPage} />

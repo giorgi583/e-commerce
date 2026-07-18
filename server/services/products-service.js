@@ -1,7 +1,7 @@
 const {z} = require('zod');
 const {ProductSchema} = require('../models/products-schema');
 const {sequelize} = require('../utils/db');
-const {Op} = require('sequelize');
+const {Op, literal, where} = require('sequelize');
 
 const productValidator = z.object({
     name: z.string().min(3).max(50),
@@ -69,6 +69,7 @@ async function getAllProducts(req, res) {
         }
         res.status(200).json({success: true, message: 'Product found', product});
     } catch (error) {
+        console.error(error);
         res.status(500).json({success: false, message: error.message});
     }
  }
@@ -76,6 +77,7 @@ async function createProduct(req, res) {
     const validProduct = productValidator.safeParse(req.body);
 if(!validProduct.success) {
     const error = JSON.parse(validProduct.error.message);
+    console.log(error);
     return res.status(400).json({success: false, message: error});
 }
 try {
@@ -92,6 +94,7 @@ try {
 
 async function updateProduct(req, res) {
     const validProduct = productValidator.partial().safeParse(req.body);
+    console.log(validProduct);
     if(!validProduct.success) {
         return res.status(400).json({success: false, message: validProduct.error.issues});
     }
@@ -136,18 +139,36 @@ async function getProductsByCategory(req, res) {
         res.status(500).json({success: false, message: error.message});
     }
 }
+async function getTopProducts(req, res) {
+    try {
+        const [topRatedProducts, recentlyAdded, TopSales] = await Promise.all([
+            ProductSchema.findAll({order: [['rating', 'DESC']], limit: 10}), 
+        ProductSchema.findAll({order: [['createdAt', 'DESC']], limit: 10}), 
+        ProductSchema.findAll({where: {discountedPrice: {[Op.ne]: null}}, order: [[literal('(price - "discountedPrice") / price'), 'DESC']], limit: 10})]);
+        if(!topRatedProducts || !recentlyAdded || !TopSales) {
+            return res.status(404).json({success: false, message: 'Products not found'});
+        }
+        res.status(200).json({success: true, message: 'Products retrieved successfully', topRatedProducts, recentlyAdded, TopSales});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({success: false, message: error.message});
+    }
+}
 async function deleteProduct(req, res) {
     const productId = req.params.id;
+    console.log(productId);
     if(!productId) {
         return res.status(400).json({success: false, message: 'Product id is required'});
     }
     try {
         const deletedProduct = await ProductSchema.destroy({where: {id: productId}});
-        if(!deletedProduct) {
+        console.log(deletedProduct);
+        if(!deletedProduct) {   
            return res.status(404).json({success: false, message: 'Product not found'});
         }
-        res.status(204).json({success: true, message: 'Product deleted'});
+        res.status(200).json({success: true, message: 'Product deleted'});
     } catch (error) {
+        console.log(error);
         res.status(500).json({success: false, message: error.message});
     }
 }
@@ -158,5 +179,6 @@ module.exports = {
     updateProduct,
     deleteProduct,
     getCategories,
-    getProductsByCategory
+    getProductsByCategory,
+    getTopProducts
 }

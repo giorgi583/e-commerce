@@ -1,9 +1,11 @@
-import { Pen, Save, User2, XIcon } from 'lucide-react'
+import { ChevronRight, Home, Pen, Save, User2, XIcon } from 'lucide-react'
 import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { logout } from '../slices/userSlice'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, NavLink} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 const Profile = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -73,9 +75,15 @@ const Profile = () => {
   }, [])
 console.log(userInfo, editedUserInfo)
   return (
-
+    <>
+    <Header />
     <div className='max-w-7xl mx-auto py-15 overflow-x-hidden relative'>
         <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{user?.user?.username || 'User'}'s Profile</h1>
+      <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
+        <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
+        <span><ChevronRight size={20} /></span>
+        <span className='text-[var(--accent)] flex items-center gap-2'><User2 size={20} /> Profile</span>
+      </div>
         <div className='flex items-center flex-col p-5 rounded-4xl bg-amber-50 border border-amber-100 relative'> 
           <button onClick={() => {setEditPanelOpen(!editPanelOpen); setEditedUserInfo({...userInfo})}} className='absolute top-5 right-5 cursor-pointer '><Pen className='inline mr-2 size-5'/> Edit</button>
           <div className='flex items-center justify-between gap-5'>
@@ -122,6 +130,8 @@ console.log(userInfo, editedUserInfo)
           </div>  
         </div> </div>}
     </div>
+    <Footer />
+    </>
   )
 }
 

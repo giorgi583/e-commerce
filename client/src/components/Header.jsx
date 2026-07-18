@@ -5,8 +5,10 @@ import { NavLink } from 'react-router-dom'
 import { FaProductHunt } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../slices/userSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
+    const navigate = useNavigate()
     const [open, setOpen] = React.useState(false)
     const [navOpen, setNavOpen] = React.useState(false)
     const user = useSelector(state => state.user)
@@ -15,6 +17,7 @@ const Header = () => {
     const handleLogout = () => {
         localStorage.removeItem('token')
         dispatch(logout())
+        navigate('/login')
     }
   return (
     <header className='w-full border-b border-gray-200 shadow sticky top-0 z-50 bg-white'> 

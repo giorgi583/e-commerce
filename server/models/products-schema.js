@@ -12,7 +12,7 @@ const ProductSchema = sequelize.define('products', {
         allowNull: false
     },
     price: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     stock: {
@@ -20,7 +20,7 @@ const ProductSchema = sequelize.define('products', {
         allowNull: false
     },
     discountedPrice: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.FLOAT,
         allowNull: true
     },
     quantity: {
@@ -40,7 +40,7 @@ const ProductSchema = sequelize.define('products', {
         allowNull: false
     },
     rating: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.FLOAT,
         defaultValue: 0,
         allowNull: false
     }, },
