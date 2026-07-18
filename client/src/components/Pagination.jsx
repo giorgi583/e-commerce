@@ -1,7 +1,9 @@
 import React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 const Pagination = ({pages, currentPage, setCurrentPage}) => {
-
+if(pages === 1){
+  return null
+}
   return (
     <div className='flex items-center justify-center gap-3 mt-10'>
         <button className='disabled:opacity-50 disabled:pointer-events-none' disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}><ChevronLeft size={20} /></button>

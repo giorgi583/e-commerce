@@ -4,7 +4,7 @@ import { ShoppingCart } from 'lucide-react'
 const ProductCard = ({id, name, price, oldPrice}) => {
   const discount = Math.round(((oldPrice - price) / oldPrice) * 100)
   return (
-    <div key={id} className='p-3 rounded-lg flex flex-col gap-2 items-start justify-center shadow'>
+    <div key={id} className='p-3 rounded-lg flex flex-col gap-2 items-start justify-between shadow'>
       <div className='w-full h-40 relative'>
        {price && <div className='absolute top-2 w-10 h-10 font-bold left-2 bg-red-600 text-white rounded-full text-sm -rotate-45 flex items-center justify-center'>{discount}%</div>}
         <img src={placeholder} alt="product image" className='w-full h-full' /></div>

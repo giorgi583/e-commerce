@@ -76,58 +76,58 @@ const Register = () => {
         <form onSubmit={registerUser}>
             <div className='grid grid-cols-2 gap-5'>
             <div className='flex flex-col gap-2'>
-                <div className='flex flex-col gap-1'>
+                <div className='flex flex-col gap-1 '>
                 <label htmlFor="firstName">First Name</label>
-                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md px-3 focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
-                <User className='inline size-5' color='gray'/>
-                <input className='w-full' type="text" name="firstName" id="firstName" required placeholder="Enter your First Name" />
+                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
+                <User className='inline size-5 absolute left-3' color='gray'/>
+                <input className='w-full px-10' type="text" name="firstName" id="firstName" required placeholder="Enter your First Name" />
                 </div>
             </div>
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-1 '>
                 <label htmlFor="lastName">Last Name</label>
-                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md px-3 focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
-                <User className='inline size-5' color='gray'/>
-                <input className='w-full' type="text" name="lastName" id="lastName" required placeholder="Enter your Last Name" />
+                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
+                <User className='inline size-5 absolute left-3' color='gray'/>
+                <input className='w-full px-10' type="text" name="lastName" id="lastName" required placeholder="Enter your Last Name" />
                 </div>
             </div>
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 '>
                 <label htmlFor="number">Phone Number</label>
-                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md px-3 focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
-                <Phone className='inline size-5' color='gray'/>
-                <input className='w-full' type="text" name="contactNumber" id="number" required placeholder="Enter your phone number" />
+                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
+                <Phone className='inline size-5 absolute left-3' color='gray'/>
+                <input className='w-full px-10' type="text" name="contactNumber" id="number" required placeholder="Enter your phone number" />
                 </div>
             </div>
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-1 '>
                 <label htmlFor="username">Username</label>
-                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md px-3 focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
-                <User className='inline size-5' color='gray'/>
-                <input className='w-full' type="text" name="username" id="username" required placeholder="Enter your username" />
+                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
+                <User className='inline size-5 absolute left-3' color='gray'/>
+                <input className='w-full px-10' type="text" name="username" id="username" required placeholder="Enter your username" />
                 </div>
             </div>
             </div>
             <div className='flex flex-col gap-2'>
             
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-1 '>
                 <label htmlFor="email">Email</label>
-                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md px-3 focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
-                <Mail className='inline size-5' color='gray'/>
-                <input className='w-full' type="email" name="email" id="email" required placeholder="Enter your email" />
+                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
+                <Mail className='inline size-5 absolute left-3' color='gray'/>
+                <input className='w-full px-10' type="email" name="email" id="email" required placeholder="Enter your email" />
                 </div>
             </div>
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-1 '>
                 <label htmlFor="password">Password</label>
-                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md px-3 focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
-                <Lock className='inline mr-2 size-5' color='gray'/>
-                <input onChange={(e) => getPasswordScore(e.target.value)} className='w-full' type={showPassword ? "text" : "password"} name="password" id="password" required placeholder="Enter your password" />
-                <Eye onClick={()=> setShowPassword(!showPassword)} className='inline size-5 cursor-pointer' color='gray'/>
+                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
+                <Lock className='inline mr-2 size-5 absolute left-3' color='gray'/>
+                <input onChange={(e) => getPasswordScore(e.target.value)} className='w-full px-10' type={showPassword ? "text" : "password"} name="password" id="password" required placeholder="Enter your password" />
+                <Eye onClick={()=> setShowPassword(!showPassword)} className='inline size-5 cursor-pointer absolute right-3' color='gray'/>
                 </div>
             </div>
             <div className='flex flex-col gap-1'>
                 <label htmlFor="confirmpassword">Confirm Password</label>
-                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md px-3 focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
-                <Lock  className='inline mr-2 size-5' color='gray'/>
-                <input className='w-full' type={showConfirmPassword ? "text" : "password"} name="confirmPassword" id="confirmpassword" required placeholder="Confirm your password" />
-                <Eye onClick={()=> setShowConfirmPassword(!showConfirmPassword)} className='inline size-5 cursor-pointer' color='gray'/>
+                <div className='flex items-center relative bg-[var(--light-grey)] rounded-md focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
+                <Lock  className='inline mr-2 size-5 absolute left-3' color='gray'/>
+                <input className='w-full px-10' type={showConfirmPassword ? "text" : "password"} name="confirmPassword" id="confirmpassword" required placeholder="Confirm your password" />
+                <Eye onClick={()=> setShowConfirmPassword(!showConfirmPassword)} className='inline size-5 cursor-pointer absolute right-3' color='gray'/>
                 </div>
             </div>
            {passwordScore>0 && <div className='h-1 w-full bg-[var(--light-grey)] mt-3 -mb-5 rounded-2xl relative'><div style={{width: `${(passwordScore/5)*100}%`, backgroundColor: `${passwordScore < 3 ? 'red' : `${passwordScore < 5 ? 'orange' : 'lime'}`}`}} className='absolute top-0 left-0 h-1 rounded-2xl transition-all duration-300'></div></div>}

@@ -17,13 +17,15 @@ const productValidator = z.object({
 
 
 async function getAllProducts(req, res) {
-    const {category, minPrice, maxPrice, page=1, limit=10, sort='createdAt', order='asc', search, brand} = req.query;
-    console.log(maxPrice, minPrice);
+    const {categories, minPrice, maxPrice, page=1, limit=20, sort='createdAt', order='asc', name, brand} = req.query;
     const where = {};
    try 
    { 
-    if(category) {
-        where.category = category;
+    if(categories) {
+        const category = categories.split(',');
+        where.category = Array.isArray(category)
+    ? { [Op.in]: category }
+    : category;
     }
     if(minPrice || maxPrice) {
         where.price = {}
@@ -38,16 +40,18 @@ async function getAllProducts(req, res) {
         where.price = {[Op.between]: [Number(minPrice), Number(maxPrice)]};
     }
     if(brand) {
-        where.brand = brand;
+        where.brand = {[Op.iLike]: `%${brand}%`};
     }
-    if(search) {
-        where.name = {[Op.iLike]: `%${search}%`};
+    if(name) {
+        where.name = {[Op.iLike]: `%${name}%`};
     }
+    const allProducts = await ProductSchema.findAll({where});
     const products = await ProductSchema.findAll({where, limit: Number(limit), offset: (Number(page) - 1) * Number(limit), order: [[sort, order.toUpperCase()]]});
+    const pages = Math.ceil(allProducts.length / limit);
     if(!products) {
         return res.status(404).json({success: false, message: 'Products not found'});
     }
-    res.status(200).json({success: true, message: 'Products retrieved successfully', products});
+    res.status(200).json({success: true, message: 'Products retrieved successfully', products, pages});
     } catch (error) {
         console.error(error);
         res.status(500).json({success: false, message: error.message});
