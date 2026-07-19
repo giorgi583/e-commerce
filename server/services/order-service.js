@@ -95,7 +95,7 @@ async function createOrder (req, res) {
                 await t.rollback();
                 return res.status(400).json({ success: false, message: `Insufficient stock for ${product.name}` });
             }
-            const unitPrice = product.price; // server-trusted price, not cart's
+            const unitPrice = product.discountedPrice || product.price; // server-trusted price, not cart's
             const subtotal = unitPrice * ci.quantity;
             totalAmount += subtotal;
 
@@ -120,6 +120,7 @@ async function createOrder (req, res) {
         await t.commit();
         res.status(201).json({success: true, message: 'Order created', data: newOrder});
     } catch (error) {
+        console.log(error);
         await t.rollback();
         res.status(500).json({success: false, message: error.message});
     }

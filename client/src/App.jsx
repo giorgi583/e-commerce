@@ -16,6 +16,7 @@ import Categories from './pages/Categories'
 import ProductsByCategory from './pages/ProductsByCategory'
 import EditProducts from './pages/EditProducts'
 import AccessDenied from './pages/AccessDenied'
+import Cart from './pages/Cart'
 function App() {
   const user = useSelector(state => state.user)
 const apiUrl = import.meta.env.VITE_API_URL
@@ -35,11 +36,11 @@ async function getUser(){
       }
     })
     if(!response.ok) {
-      throw new Error(data.message)
       if (response.status === 401) {
         localStorage.removeItem("token");
-        
+        console.log(response.status)
       }
+      throw new Error('Unauthorized')
     }
     const data = await response.json()
     console.log(data.user.username)
@@ -65,6 +66,7 @@ useEffect(() => {
     <Route path='/products' element={<Products user={'customer'}/>} />
     <Route path='/categories' element={<Categories/>} />
     <Route path='/categories/:category' element={<ProductsByCategory />} />
+    <Route path='/cart' element={<Cart />} />
    <Route path='/admin/products' element={<Products user={'admin'}/>} />
     <Route path='/access-denied' element={<AccessDenied />} />
     <Route path='/add-product' element={<AddProduct />} />

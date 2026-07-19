@@ -4,7 +4,7 @@ import { ShoppingCart } from 'lucide-react'
 import {toast} from 'react-hot-toast'
 import {useNavigate} from 'react-router-dom'
 
-const ProductCard = ({id, name, price, oldPrice, user, getProducts}) => {
+const ProductCard = ({id, name, price, oldPrice, user, quantity, getProducts}) => {
   const navigate = useNavigate()
 const apiUrl = import.meta.env.VITE_API_URL;
   const deleteProduct = async (id) => {
@@ -37,6 +37,33 @@ const apiUrl = import.meta.env.VITE_API_URL;
       toast.error(error.message);
     }
   }
+  const addToCart = async (id) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    try {
+      const response = await fetch(`${apiUrl}/cart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ productId: id, quantity: quantity })
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message);
+        if (response.status === 401) {
+          localStorage.removeItem("token");
+          dispatch(logout());
+          toast.error('unauthorized');
+        }
+      }
+      toast.success(result.message);
+      console.log(result);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
   const discount = Math.round(((oldPrice - price) / oldPrice) * 100)
   return (
     <div key={id} className='p-3 rounded-lg flex flex-col gap-2 items-start justify-between shadow'>
@@ -51,7 +78,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
         </div>
       </div>
       <div className='flex gap-2 items-center'>
-       {user !== 'admin' && <button className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md'><ShoppingCart size={20}/></button>}
+       {user !== 'admin' && <button onClick={() => addToCart(id)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md'><ShoppingCart size={20}/></button>}
         <button className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md grow'>Details</button>
         {user === 'admin' && <button onClick={() => navigate(`/edit-product/${id}`)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md '>Edit</button>}
         {user === 'admin' && <button onClick={() => deleteProduct(id)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md '>Delete</button>}
