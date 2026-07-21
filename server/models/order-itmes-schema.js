@@ -18,6 +18,10 @@ const OrderItemSchema = sequelize.define('order_items', {
             key: 'id'
         }
     },
+    productName: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false

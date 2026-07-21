@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Check, ChevronDown, Filter } from 'lucide-react'
-const Filters = ({name, setName, checkedCategories, setCheckedCategories, brand, setBrand, minPrice, setMinPrice, maxPrice, setMaxPrice}) => {
+const Filters = ({name, setName, setCurrentPage, checkedCategories, setCheckedCategories, brand, setBrand, minPrice, setMinPrice, maxPrice, setMaxPrice}) => {
   const MIN = 0;
   const MAX = 3000;
 const left = ((minPrice - MIN) / (MAX - MIN)) * 100;
@@ -20,6 +20,8 @@ const clearFilters = () => {
     setBrand('');
     setMinPrice(0);
     setMaxPrice(3000);
+    setName('');
+    setCurrentPage(1);
 }
 const getCategories = async () => {
     try {
@@ -91,7 +93,7 @@ const getCategories = async () => {
               <details>
               <summary className='flex items-center justify-between cursor-pointer text-xl font-bold'>Categories <ChevronDown size={20}/></summary>
               <ul className='flex flex-col gap-2 py-2'>
-               {categories && categories.map((category, index) => <li key={index} className='flex items-center gap-2'><input type="checkbox" name={category.category} checked={checkedCategories.includes(category.category)} onChange={(e)=> handleCheckCat(category.category)} id={category.category} hidden /> 
+               {categories && categories.map((category, index) => <li key={index} className='flex items-center gap-2'><input type="checkbox" name={category.category} checked={checkedCategories.includes(category.category)} onChange={(e)=> {handleCheckCat(category.category); setCurrentPage(1);}} id={category.category} hidden /> 
                 <div className={`cursor-pointer  w-4 h-4 rounded-full ${checkedCategories.includes(category.category) ? 'bg-[var(--secondary)]' : 'bg-[var(--light-grey)]'} border border-gray-200`}><label htmlFor={category.category} className='cursor-pointer w-full h-full flex items-center justify-center' >{checkedCategories.includes(category.category) && <Check size={10} color='white'/>}</label></div> <p>{category.category} </p></li>)}
               </ul>
             </details>
@@ -100,7 +102,7 @@ const getCategories = async () => {
               <details>
                 <summary className='flex items-center justify-between cursor-pointer text-xl font-bold'>Brands <ChevronDown size={20}/></summary>
                 <div className='flex flex-col gap-2 pt-8 py-2'>
-                  <input type="text" placeholder='Search brands' value={brand} onChange={(e) => setBrand(e.target.value)} />
+                  <input type="text" placeholder='Search brands' value={brand} onChange={(e) => {setBrand(e.target.value); setCurrentPage(1);}} />
                 </div>
               </details>
             </div>
@@ -108,7 +110,7 @@ const getCategories = async () => {
               <details>
                 <summary className='flex items-center justify-between cursor-pointer text-xl font-bold'>Product name <ChevronDown size={20}/></summary>
                 <div className='flex flex-col gap-2 pt-8 py-2'>
-                  <input type="text" placeholder='Search product name' value={name} onChange={(e) => setName(e.target.value)} />
+                  <input type="text" placeholder='Search product name' value={name} onChange={(e) => {setName(e.target.value); setCurrentPage(1);}} />
                 </div>
               </details>
             </div>

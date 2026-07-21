@@ -3,11 +3,12 @@ import { useParams, NavLink, Navigate } from 'react-router-dom'
 import {toast} from 'react-hot-toast'
 import { ChevronRight, Home, Pencil, Shirt } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import Loader from '../components/Loader';
 const EditProducts = () => {
     const apiURL = import.meta.env.VITE_API_URL;
     const [product, setProduct] = useState({});
 const {productId} = useParams()
-const user = useSelector(state => state.user)
+const {user, loading} = useSelector(state => state.user)
 const getProduct = async () => {
     const response = await fetch(`${apiURL}/products/${productId}`);
     const result = await response.json();
@@ -51,9 +52,10 @@ const updateProduct = async () => {
     }
 }
 console.log(typeof product.price)
-if (!user.user) {
+if (!user && !loading) {
     return <Navigate to='/login'/>
 }
+if(loading) return <Loader />
   return (
   product &&  <div className='max-w-7xl mx-auto py-15'>
     <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>

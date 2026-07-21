@@ -11,7 +11,7 @@ const OrderSchema = sequelize.define('orders', {
         }
     },
     totalAmount: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     currency: {

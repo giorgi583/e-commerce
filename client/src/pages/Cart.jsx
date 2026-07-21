@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import {toast} from 'react-hot-toast'
 import {ChevronRight, Home, Minus, Plus, ProjectorIcon, ShieldCheck, ShoppingCart, Trash2, XIcon} from 'lucide-react'
-import { NavLink, Navigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import placeholder from '../assets/placeholder_600x.webp'
+import Loader from '../components/Loader'
 const Cart = () => {
+  const navigate = useNavigate()
   const apiUrl = import.meta.env.VITE_API_URL
   const [cartItems, setCartItems] = useState([])
+  const [adressOpen, setAdressOpen] = useState(false)
+  const [adress, setAdress] = useState({street: '', city: '', state: '', country: '', zipCode: ''})
+  const [orderNote, setOrderNote] = useState('')
   const [paymentWindowOpen, setPaymentWindowOpen] = useState(false)
-  const user = useSelector(state => state.user)
-  if(!user.user) return <Navigate to='/access-denied'/>
   const getCartItems = async () => {
     const token = localStorage.getItem('token')
     if(!token) return
     try {
-const response = await fetch(apiUrl + '/cart', {
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  }
-})
-const data = await response.json()
-if(!response.ok) {
+      const response = await fetch(apiUrl + '/cart', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      const data = await response.json()
+      if(!response.ok) {
   if (response.status === 401) {
     localStorage.removeItem("token");
     toast.error('unauthorized')
@@ -32,8 +35,8 @@ if(!response.ok) {
 }
 setCartItems(data.cartItems)
 console.log(data)
-    }
-    catch (error) {
+}
+catch (error) {
       console.log(error)
     }
   }
@@ -41,7 +44,7 @@ console.log(data)
     const token = localStorage.getItem('token')
     if(!token) return
     try {
-const response = await fetch(apiUrl + '/cart/' + id, {
+      const response = await fetch(apiUrl + '/cart/' + id, {
   method: 'PATCH',
   headers: {
     'Content-Type': 'application/json',
@@ -61,8 +64,8 @@ getCartItems()
 console.log(data)
     }
     catch (error) {
+    }
   }
-}
 const deleteItem = async (id) => {
   const token = localStorage.getItem('token')
   if(!token) return
@@ -85,7 +88,7 @@ if(!response.ok) {
 toast.success(data.message)
 getCartItems()
 console.log(data)
-    }
+}
     catch (error) {
       toast.error(error.message)
     }
@@ -114,19 +117,23 @@ if(!response.ok) {
 toast.success(data.message)
 getCartItems()
 console.log(data)
-    }
-    catch (error) {
-      toast.error(error.message)
-    }
+}
+catch (error) {
+  toast.error(error.message)
+}
 }
 const makeOrder = async () => {
+  if(!adress.state || !adress.street || !adress.city || !adress.country || !adress.zipCode) {
+    toast.error('Please enter your shipping address')
+    return }
   const confirm = window.confirm('Are you sure you want to place this order?')
   if(!confirm) return
   const token = localStorage.getItem('token')
   if(!token) return
   try {
-const response = await fetch(apiUrl + '/orders', {
-  method: 'POST',
+    const response = await fetch(apiUrl + '/orders', {
+      method: 'POST',
+      body: JSON.stringify({shippingAddress: adress, notes: orderNote}),
   headers: {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`
@@ -148,9 +155,15 @@ console.log(data)
       toast.error(error.message)
     }
 }
-  useEffect(() => {
-    getCartItems()
-  }, [])
+useEffect(() => {
+  getCartItems()
+}, [])
+const {user, loading} = useSelector(state => state.user)
+useEffect(() => {
+ if(!user && !loading) navigate('/login')
+}, [user, loading, navigate])
+console.log(user)
+if(loading) return <Loader />
   return (
     <>
     <Header />
@@ -179,7 +192,7 @@ console.log(data)
         <p className='text-gray-600 text-xl mb-20'>Please go to products page to add products to your cart</p>
         </div>}
       </div>
-      <div className='flex flex-col mt-10 '>
+     {cartItems.length > 0 && <div className='flex flex-col mt-10 '>
         <h1 className='text-3xl font-bold text-[var(--accent)] mb-10'>Order Summary</h1>
         <div className='flex flex-col gap-5 '>
           <div className='flex items-center justify-between border-b border-gray-300 pb-5 gap-10'>
@@ -195,15 +208,45 @@ console.log(data)
             <p className='text-lg font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0)}</p>
           </div>
       </div>
-    <button onClick={() => setPaymentWindowOpen(true)} className='bg-[var(--accent)] text-white font-bold text-2xl py-2 px-5 rounded-full mt-20'>Checkout</button>
-    </div>
+    <button onClick={() => {setPaymentWindowOpen(true); setAdressOpen(true)}} className='bg-[var(--accent)] text-white font-bold text-2xl py-2 px-5 rounded-full mt-20'>Checkout</button>
+    </div>}
     </div>
     {paymentWindowOpen && <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50'>
-      <div className='bg-white p-5 rounded-2xl relative min-w-100'>
+      <div className='bg-white p-5 rounded-2xl relative min-w-100 overflow-hidden'>
         <h4 className='text-2xl font-semibold mb-5 flex items-center gap-2'>Payment <ShieldCheck size={24} fill='lightgreen' /></h4>
         <button className='absolute top-5 right-5 bg-red-600 p-2 rounded-full' onClick={() => setPaymentWindowOpen(false)}><XIcon size={20} /></button>
-        <p className='mb-5 text-xl mt-20'>Payment for total: <span className='font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0)}</span></p>
+        <div className={`flex w-full relative ${adressOpen ? 'min-h-150' : 'min-h-80'}`}>
+        <div className={`flex flex-col gap-5 ${adressOpen ? 'translate-x-0' : '-translate-x-[170%]'} w-full absolute transition-all duration-300`}> 
+          <p className='text-lg font-semibold'>Shipping Address</p>
+          <div className='flex flex-col gap-2'>
+            <label htmlFor="street">Street*</label>
+            <input type="text" name="street" id="street" value={adress.street} onChange={e => setAdress({...adress, street: e.target.value})} />
+          </div>
+           <div className='flex flex-col gap-2'>
+            <label htmlFor="city">City*</label>
+            <input type="text" name="city" id="city" value={adress.city} onChange={e => setAdress({...adress, city: e.target.value})} />
+          </div>
+           <div className='flex flex-col gap-2'>
+            <label htmlFor="state">State*</label>
+            <input type="text" name="state" id="state" value={adress.state} onChange={e => setAdress({...adress, state: e.target.value})} />
+          </div>
+           <div className='flex flex-col gap-2'>
+            <label htmlFor="country">Country*</label>
+            <input type="text" name="country" id="country" value={adress.country} onChange={e => setAdress({...adress, country: e.target.value})} />
+          </div>
+           <div className='flex flex-col gap-2'>
+            <label htmlFor="zip">Zip code*</label>
+            <input type="text" name="zip" id="zip" value={adress.zipCode} onChange={e => setAdress({...adress, zipCode: e.target.value})} />
+          </div>
+         <button onClick={() => setAdressOpen(false)}>continue</button>
+        </div>
+         <div className={`flex flex-col justify-between gap-5 w-full ${adressOpen ? 'translate-x-[170%]' : 'translate-x-0'} absolute transition-all duration-300 bg-white `}>
+        <p className='mb-10 text-2xl mt-10'>Payment for total: <span className='font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0)}</span></p>
+        <div className='w-full'><input type="text" className='w-full' placeholder='add a message or note' value={orderNote} onChange={e => setOrderNote(e.target.value)}/></div>
+        <button onClick={() => setAdressOpen(true)}>Go back</button>  
         <button onClick={makeOrder}>Procceed to Payment</button>
+        </div>
+        </div>
       </div>
       </div>}
     <Footer />

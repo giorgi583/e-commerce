@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Search, SearchIcon, X } from 'lucide-react'
-
+import placeholder from '../assets/placeholder_600x.webp'
 const SearchBar = () => {
     const [open, setOpen] = React.useState(false)
     const [products, setProducts] = React.useState([])
@@ -40,8 +40,12 @@ const apiUrl = import.meta.env.VITE_API_URL;
                 </div>}
                 <div className=' mt-10'>
             {products.length > 0 && search ? products.map(product =>(
-                <div key={product.id} className='flex flex-col items-center  hover:bg-gray-100 cursor-pointer rounded-lg'>
-                   <h3 className='text-lg font-semibold mt-5 mb-5'>{product.name}</h3>
+                <div key={product.id} className='flex items-stretch gap-5 my-5 hover:bg-gray-100 cursor-pointer rounded-lg'>
+                  <div className='w-20 h-full'><img className='w-full' src={placeholder} alt="placeholder"></img></div>
+                  <div className='w-full flex flex-col'>
+                   <h3 className='text-lg font-semibold'>{product.name}</h3>
+                   <p className='text-[var(--secondary)]'>${product.price}</p>
+                   </div>
                     </div>
             )): search && <div className='flex flex-col items-center gap-5 p-5 mt-10'><SearchIcon size={30}/> <p>No products found</p></div>}
             </div>

@@ -56,7 +56,7 @@ useEffect(() => {
       </div>
     <div className='grid grid-cols-4 gap-4 '>
       <div className='col-span-1 relative'>
-        <Filters name={name} setName={setName} checkedCategories={checkedCategories} setCheckedCategories={setCheckedCategories} brand={brand} setBrand={setBrand} minPrice={minPrice} setMinPrice={setMinPrice} maxPrice={maxPrice} setMaxPrice={setMaxPrice}/>
+        <Filters name={name} setName={setName} setCurrentPage={setCurrentPage} checkedCategories={checkedCategories} setCheckedCategories={setCheckedCategories} brand={brand} setBrand={setBrand} minPrice={minPrice} setMinPrice={setMinPrice} maxPrice={maxPrice} setMaxPrice={setMaxPrice}/>
       </div>
       <div className='col-span-3 flex flex-col gap-5'>
        <div className='flex items-center justify-between'> 

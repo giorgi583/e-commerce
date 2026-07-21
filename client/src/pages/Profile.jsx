@@ -1,18 +1,20 @@
-import { ChevronRight, Home, Pen, Save, User2, XIcon } from 'lucide-react'
+import {  ChevronRight, Home, Pen, Save, User2, XIcon } from 'lucide-react'
 import React, {useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { logout } from '../slices/userSlice'
-import {useNavigate, NavLink} from 'react-router-dom'
+import {Navigate, useNavigate, NavLink} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import Loader from '../components/Loader'
+import MyOrders from '../components/MyOrders'
 const Profile = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const apiUrl = import.meta.env.VITE_API_URL
   const [userInfo, setUserInfo] = React.useState({})
   const [editedUserInfo, setEditedUserInfo] = React.useState({})
-  const user = useSelector(state => state.user)
+  const {user, loading} = useSelector(state => state.user)
   const [editPanelOpen, setEditPanelOpen] = React.useState(false)
   const getMyInfo = async () => {
     const token = localStorage.getItem('token') 
@@ -70,15 +72,18 @@ const Profile = () => {
       toast.error(error.message)
     }
   }
+  
   useEffect(() => {
     getMyInfo()
   }, [])
 console.log(userInfo, editedUserInfo)
+if(!user && !loading) return <Navigate to='/login'/>
+if(loading) return <Loader />
   return (
     <>
     <Header />
     <div className='max-w-7xl mx-auto py-15 overflow-x-hidden relative'>
-        <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{user?.user?.username || 'User'}'s Profile</h1>
+        <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{user?.username || 'User'}'s Profile</h1>
       <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
         <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
         <span><ChevronRight size={20} /></span>
@@ -91,8 +96,8 @@ console.log(userInfo, editedUserInfo)
           <div className='mt-10 grid grid-cols-3 gap-5'>
             <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>First Name: <p className='text-lg text-black'>{userInfo?.firstName}</p></p></div>
             <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>Last Name: <p className='text-lg text-black'>{userInfo?.lastName}</p></p></div>
-            <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>Username: <p className='text-lg text-black'>{user?.user?.username}</p></p></div>
-            <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>Email: <p className='text-lg text-black'>{user?.user?.email}</p></p></div>
+            <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>Username: <p className='text-lg text-black'>{user?.username}</p></p></div>
+            <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>Email: <p className='text-lg text-black'>{user?.email}</p></p></div>
             <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>Phone: <p className='text-lg text-black'>{userInfo?.contactNumber}</p></p></div>
             <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer row-span-2'><p className='text-xl font-semibold'>Bio: <p className='text-lg text-black'>{userInfo?.bio || 'N/A'}</p></p></div>
             <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>Address:<p className='text-lg text-black'> {userInfo?.address || 'N/A'}</p></p></div>
@@ -129,6 +134,7 @@ console.log(userInfo, editedUserInfo)
             <input type="text" value={editedUserInfo?.bio || ''} onChange={(e)=> setEditedUserInfo({...editedUserInfo, bio: e.target.value})} placeholder='Bio' className='border border-gray-200 p-2 w-full' />
           </div>  
         </div> </div>}
+        <MyOrders />
     </div>
     <Footer />
     </>

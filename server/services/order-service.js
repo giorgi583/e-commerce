@@ -14,7 +14,6 @@ const orderSchema = z.object({
         zipCode: z.string()
     }),
     notes: z.string().optional(),
-    currency: z.string().default('USD'),
 });
 const cancelOrderSchema = z.object({
   cancelReason: z.string().min(1, 'Cancel reason is required'),
@@ -26,7 +25,7 @@ async function getMyOrders (req, res) {
         if(!orders) {
             return res.status(404).json({success: false, message: 'Orders not found'});
         }
-        res.status(200).json({success: true, message: 'Orders found', data: orders});
+        res.status(200).json({success: true, message: 'Orders found', orders: orders});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }
@@ -63,6 +62,7 @@ async function createOrder (req, res) {
     const userId = req.user.id;
     const validOrder = orderSchema.safeParse(req.body);
     if(!validOrder.success) {
+        console.log(validOrder.error.issues);
         return res.status(400).json({success: false, message: validOrder.error.issues});
     }
     const orderData = validOrder.data;
@@ -95,11 +95,13 @@ async function createOrder (req, res) {
                 await t.rollback();
                 return res.status(400).json({ success: false, message: `Insufficient stock for ${product.name}` });
             }
+            const productName = product.name;
             const unitPrice = product.discountedPrice || product.price; // server-trusted price, not cart's
             const subtotal = unitPrice * ci.quantity;
             totalAmount += subtotal;
 
             orderItemsData.push({
+                productName,
                 productId: product.id,
                 quantity: ci.quantity,
                 unitPrice,

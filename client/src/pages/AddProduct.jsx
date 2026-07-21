@@ -3,9 +3,10 @@ import React from 'react'
 import { NavLink, Navigate } from 'react-router-dom'
 import {toast} from 'react-hot-toast'
 import {useSelector} from 'react-redux'
+import Loader from '../components/Loader'
 const AddProduct = () => {
 const apiURL = import.meta.env.VITE_API_URL;
-const user = useSelector(state => state.user)
+const {user, loading} = useSelector(state => state.user)
 const addProduct = async (e) => {
   const token = localStorage.getItem('token')
   if(!token) return
@@ -36,7 +37,8 @@ const addProduct = async (e) => {
     toast.error(error.message)
   }
 }
-if(!user.user) return <Navigate to='/login' />
+if(!user && !loading) return <Navigate to='/login' />
+if(loading) return <Loader />
   return (
     <div className='max-w-7xl mx-auto py-15'>
       <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
