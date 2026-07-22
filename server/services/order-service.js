@@ -53,7 +53,7 @@ async function getAllOrders (req, res) {
         if(!orders) {
             return res.status(404).json({success: false, message: 'Orders not found'});
         }
-        res.status(200).json({success: true, message: 'Orders found', data: orders});
+        res.status(200).json({success: true, message: 'Orders found', orders: orders});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }
@@ -179,7 +179,8 @@ async function getAnyOrder (req, res) {
         if(!order) {
             return res.status(404).json({success: false, message: 'Order not found'});
         }
-        res.status(200).json({success: true, message: 'Order found', data: order});
+        const orderItems = await OrderItem.findAll({where: {orderId}});
+        res.status(200).json({success: true, message: 'Order found', order: order, orderItems});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }
