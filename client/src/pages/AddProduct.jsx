@@ -14,9 +14,14 @@ const addProduct = async (e) => {
   const formData = new FormData(e.target)
   const data = Object.fromEntries(formData)
   data.price = Number(data.price)
-  data.discountedPrice = Number(data.discountedPrice)
+  data.discountedPrice = Number(data.discountedPrice) || null
   data.stock = Number(data.stock)
   data.quantity = Number(data.quantity)
+  if(data.price < data.discountedPrice) {
+    toast.error('Discounted price cannot be greater than the original price')
+    return
+  }
+  data.category = data.category.charAt(0).toUpperCase() + data.category.slice(1)
   console.log(data)
   try { const response = await fetch(`${apiURL}/products`, {
     method: 'POST',
@@ -26,11 +31,13 @@ const addProduct = async (e) => {
     },
     body: JSON.stringify(data)
   })
+  const result = await response.json()
   if (response.ok) {
     toast.success('Product added successfully')
   }
   else {
-    throw new Error(data.message)
+    console.log(result)
+    throw new Error(result.message)
   } }
   catch (error) {
     console.log(error)
@@ -73,7 +80,7 @@ if(loading) return <Loader />
           <label htmlFor="">
             Discounted price
           </label>
-          <input name='discountedPrice' required type="number" />
+          <input name='discountedPrice' type="number" />
         </div>
         <div className='flex flex-col gap-2'>
           <label htmlFor="">

@@ -9,7 +9,7 @@ const productValidator = z.object({
     price: z.number().positive(),
     stock: z.number().positive(),
     discountedPrice: z.number().positive().nullable(),
-    quantity: z.number(),
+    quantity: z.number().positive(),
     category: z.string(),
     brand: z.string(),
     rating: z.number().optional(),
@@ -77,8 +77,8 @@ async function createProduct(req, res) {
     const validProduct = productValidator.safeParse(req.body);
 if(!validProduct.success) {
     const error = JSON.parse(validProduct.error.message);
-    console.log(error);
-    return res.status(400).json({success: false, message: error});
+    console.log(error[0].message);
+    return res.status(400).json({success: false, message: error[0].message});
 }
 try {
     const newproduct = await ProductSchema.create(validProduct.data);

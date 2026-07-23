@@ -72,7 +72,38 @@ const Profile = () => {
       toast.error(error.message)
     }
   }
-  
+  const deleteAccount = async () => {
+    const confirm = window.confirm('Are you sure you want to delete your account?')
+    if(!confirm) return
+    const token = localStorage.getItem('token') 
+    if(!token) return
+    try {
+    const response = await fetch(apiUrl + '/auth/me/delete-account', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    const data = await response.json()
+    if(!response.ok) {
+      throw new Error(data.message)
+      if (response.status === 401) {
+        localStorage.removeItem("token");
+        toast.error('unauthorized')
+        dispatch(logout())
+        navigate('/login')
+      }
+    }
+    toast.success(data.message)
+    dispatch(logout())
+    navigate('/login')
+    console.log(data)
+    }
+    catch (error) {
+      toast.error(error.message)
+    }
+  }
   useEffect(() => {
     getMyInfo()
   }, [])
@@ -83,7 +114,10 @@ if(loading) return <Loader />
     <>
     <Header />
     <div className='max-w-7xl mx-auto py-15 overflow-x-hidden relative'>
-        <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{user?.username || 'User'}'s Profile</h1>
+        <div className='flex items-center justify-between'>
+          <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{user?.username || 'User'}'s Profile</h1>
+          <button onClick={deleteAccount} className='text-red-500 bg-white border border-red-500 px-3 py-1 cursor-pointer hover:bg-red-500 hover:text-white'>Delete Account</button>
+        </div>
       <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
         <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
         <span><ChevronRight size={20} /></span>

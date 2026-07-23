@@ -13,6 +13,7 @@ const OredersList = () => {
     const [orderItems, setOrderItems] = React.useState([])
     const [orderStatus, setOrderStatus] = React.useState('')
     const [detailedOrder, setDetailedOrder] = React.useState('')
+    const [search, setSearch] = React.useState('')
     const [orders, setOrders] = React.useState([])
     const getAllOrders = async () => {
     try {
@@ -108,8 +109,9 @@ const OredersList = () => {
     <Header/>
     <div className='max-w-7xl mx-auto py-15'>
         <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>List of all orders</h1>
+        <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search orders by user ID' className='mb-5'></input>
         <div className='flex flex-col gap-10'>
-            {orders.length > 0 ? orders.map((order) => <div key={order._id} className='bg-slate-200 p-4 shadow rounded '> 
+            {orders.length > 0 ? orders.filter((order) => search ? order.userId == search : true).map((order) => <div key={order._id} className='bg-slate-200 p-4 shadow rounded '> 
         <div className='flex items-center justify-between text-lg'>
           <h3>Order ID: #{order.id} <span className='ml-10'>User ID: #{order.userId}</span></h3>
           <p>Created At: {order.createdAt.split('T')[0]}</p>

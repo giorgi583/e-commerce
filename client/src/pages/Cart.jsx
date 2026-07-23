@@ -154,6 +154,7 @@ console.log(data)
     catch (error) {
       toast.error(error.message)
     }
+  setPaymentWindowOpen(false)
 }
 useEffect(() => {
   getCartItems()

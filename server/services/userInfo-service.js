@@ -1,5 +1,6 @@
 const {z} = require('zod');
 const {userInfoSchema: userInfo} = require('../models/userInfo');
+const {UserSchema: User} = require('../models/auth-schema');
 
 const userInfoValidation = z.object({
     firstName: z.string().min(3).max(50),
@@ -49,10 +50,11 @@ async function updateUserInfo(req, res) {
 async function getAllUserInfo (req, res) {
     try {
         const AlluserInfo = await userInfo.findAll();
+        const Allusers = await User.findAll();
         if(!AlluserInfo) {
             return res.status(404).json({success: false, message: 'Users info not found'});
         }
-        res.status(200).json({success: true, message: 'Users info found', AlluserInfo});
+        res.status(200).json({success: true, message: 'Users info found', AlluserInfo, Allusers});
     } catch (error) {
         res.status(500).json({success: false, message: error.message});
     }
