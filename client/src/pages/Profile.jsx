@@ -14,6 +14,9 @@ const Profile = () => {
   const apiUrl = import.meta.env.VITE_API_URL
   const [userInfo, setUserInfo] = React.useState({})
   const [editedUserInfo, setEditedUserInfo] = React.useState({})
+  const [currentPassword, setCurrentPassword] = React.useState('')
+  const [changePasswordOpen, setChangePasswordOpen] = React.useState(false)
+  const [newPassword, setNewPassword] = React.useState('')
   const {user, loading} = useSelector(state => state.user)
   const [editPanelOpen, setEditPanelOpen] = React.useState(false)
   const getMyInfo = async () => {
@@ -104,6 +107,31 @@ const Profile = () => {
       toast.error(error.message)
     }
   }
+  const changePassword = async () => {
+    const confirm = window.confirm('Are you sure you want to change your password?')
+    if(!confirm) return
+    const token = localStorage.getItem('token') 
+    if(!token) return
+    try {
+    const response = await fetch(apiUrl + '/auth/me/change-password', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({currentPassword, newPassword})
+    })
+    const data = await response.json()
+    if(!response.ok) {
+      throw new Error(data.message)
+    }
+    toast.success(data.message)
+    console.log(data)
+    }
+    catch (error) {
+      toast.error('invalid credentials')
+    }
+  }
   useEffect(() => {
     getMyInfo()
   }, [])
@@ -141,6 +169,7 @@ if(loading) return <Loader />
         {editPanelOpen && <div className='flex items-center mt-10 flex-col p-5 rounded-4xl bg-amber-50 border border-amber-100 relative'>
           <button onClick={() => {handleSave(); setEditPanelOpen(!editPanelOpen)}} className='absolute top-5 right-25 cursor-pointer flex items-center gap-2'><Save /> Save</button>
           <button className='absolute top-5 right-5 cursor-pointer' onClick={() => {setEditPanelOpen(!editPanelOpen)}}><XIcon  size={20}/></button>
+          <button onClick={() => {setChangePasswordOpen(!changePasswordOpen)}} className='absolute top-5 left-5 cursor-pointer flex items-center gap-2'>Change password</button>
           <h2 className='text-3xl font-bold text-[var(--accent)] mb-10'>Edit Panel</h2>
           <div className='grid grid-cols-2 gap-5'>
           <div>
@@ -167,7 +196,23 @@ if(loading) return <Loader />
             <label htmlFor="">Bio</label>
             <input type="text" value={editedUserInfo?.bio || ''} onChange={(e)=> setEditedUserInfo({...editedUserInfo, bio: e.target.value})} placeholder='Bio' className='border border-gray-200 p-2 w-full' />
           </div>  
-        </div> </div>}
+        </div>
+        </div>}
+        {changePasswordOpen && <div className='flex items-center mt-10 flex-col p-5 rounded-4xl bg-amber-50 border border-amber-100 relative'>
+          <button className='absolute top-5 right-5 cursor-pointer' onClick={() => {setChangePasswordOpen(!changePasswordOpen)}}><XIcon  size={20}/></button>
+          <h2 className='text-3xl font-bold text-[var(--accent)] mb-10'>Change Password</h2>
+          <div className='grid grid-cols-2 gap-5'>
+            <div>
+              <label htmlFor="">Old Password</label>
+              <input required type="password" value={currentPassword} onChange={(e)=> setCurrentPassword(e.target.value)} placeholder='Old Password' className='border border-gray-200 p-2 w-full' />
+            </div>
+            <div>
+              <label htmlFor="">New Password</label>
+              <input required type="password" value={newPassword} onChange={(e)=> setNewPassword(e.target.value)} placeholder='New Password' className='border border-gray-200 p-2 w-full' />
+            </div>
+            <button onClick={() => {changePassword(); setChangePasswordOpen(!changePasswordOpen)}}>Change</button>
+          </div>
+         </div>}
         <MyOrders />
     </div>
     <Footer />

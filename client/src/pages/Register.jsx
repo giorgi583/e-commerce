@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Eye, Lock, Mail, Phone, User } from 'lucide-react'
 import { toast } from 'react-hot-toast'
+import { Link } from 'react-router-dom'
 const Register = () => {
     const apiUrl = import.meta.env.VITE_API_URL
     const [error, setError] = useState(null);
@@ -69,7 +70,7 @@ const Register = () => {
     <div className='flex flex-col items-center justify-center h-screen gap-10 bg-indigo-50'>
    
     <div>
-        <p className='text-6xl font-bold text-[var(--accent)]'>E-<span className="text-[var(--secondary)]">Buy.</span></p>
+        <Link to={'/'} className='text-6xl font-bold text-[var(--accent)]'>E-<span className="text-[var(--secondary)]">Buy.</span></Link>
     </div>
     <div className='max-w-2xl py-5 px-10 shadow bg-white min-w-sm'>
         <h1 className='text-2xl font-bold text-[var(--accent)] my-5'>Sign Up</h1>

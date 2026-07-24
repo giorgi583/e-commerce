@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-
+import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 const AllUsers = () => {
     const [userInfos, setUserInfos] = React.useState([])
     const [users, setUsers] = React.useState([])
+    const { user, loading } = useSelector(state => state.user)
     const [search, setSearch] = React.useState('')
     const apiURL = import.meta.env.VITE_API_URL
     const getUsers = async () => {
@@ -29,6 +31,7 @@ const AllUsers = () => {
     useEffect(() => {
         getUsers();
     }, [])
+    if(!user) return <Navigate to='*'/>
   return (
     <>
     <Header/>

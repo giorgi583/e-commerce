@@ -79,7 +79,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
       </div>
       <div className='flex gap-2 items-center'>
        {user !== 'admin' && <button onClick={() => addToCart(id)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md'><ShoppingCart size={20}/></button>}
-        <button className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md grow'>Details</button>
+        <button onClick={() => navigate(`/product/${id}`)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md grow'>Details</button>
         {user === 'admin' && <button onClick={() => navigate(`/edit-product/${id}`)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md '>Edit</button>}
         {user === 'admin' && <button onClick={() => deleteProduct(id)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md '>Delete</button>}
       </div>

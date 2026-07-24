@@ -10,10 +10,13 @@ const ProductsByCategory = () => {
     const [products, setProducts] = React.useState([]);
     const apiURL = import.meta.env.VITE_API_URL;
     const getProductsByCategory = async () => {
+        try {
         const response = await fetch(`${apiURL}/products/categories/${category}`);
         const result = await response.json();
         console.log(result);
-        setProducts(result.products);
+        setProducts(result.products);} catch (error) {
+            console.log(error);
+        }
     }
     useEffect(() => {
         getProductsByCategory();

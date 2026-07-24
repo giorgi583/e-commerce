@@ -11,6 +11,7 @@ async function addToCart (req, res) {
     const userId = req.user.id;
     const validation = cartItemValidation.safeParse(req.body);
     if(!validation.success) {
+        console.log(validation.error.issues);
         return res.status(400).json({success: false, message: validation.error.issues});
     }
     const {productId, quantity} = validation.data;

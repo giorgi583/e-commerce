@@ -129,6 +129,9 @@ async function getCategories(req, res) {
 }
 async function getProductsByCategory(req, res) {
     const category = req.params.category;
+    if(!category) {
+        return res.status(400).json({success: false, message: 'Category is required'});
+    }
     try {
         const products = await ProductSchema.findAll({where: {category}});
         if(!products) {

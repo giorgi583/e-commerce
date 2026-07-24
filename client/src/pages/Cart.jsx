@@ -198,7 +198,7 @@ if(loading) return <Loader />
         <div className='flex flex-col gap-5 '>
           <div className='flex items-center justify-between border-b border-gray-300 pb-5 gap-10'>
             <p className='text-lg font-semibold'>Subtotal</p>
-            <p className='text-lg font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0)}</p>
+            <p className='text-lg font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0).toFixed(2)}</p>
           </div>
           <div className='flex items-center justify-between border-b border-gray-300 pb-5'>
             <p className='text-lg font-semibold'>Shipping</p>
@@ -206,7 +206,7 @@ if(loading) return <Loader />
           </div>
           <div className='flex items-center justify-between border-b border-gray-300 pb-5'>
             <p className='text-lg font-semibold'>Total</p>
-            <p className='text-lg font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0)}</p>
+            <p className='text-lg font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0).toFixed(2)}</p>
           </div>
       </div>
     <button onClick={() => {setPaymentWindowOpen(true); setAdressOpen(true)}} className='bg-[var(--accent)] text-white font-bold text-2xl py-2 px-5 rounded-full mt-20'>Checkout</button>
@@ -242,7 +242,7 @@ if(loading) return <Loader />
          <button onClick={() => setAdressOpen(false)}>continue</button>
         </div>
          <div className={`flex flex-col justify-between gap-5 w-full ${adressOpen ? 'translate-x-[170%]' : 'translate-x-0'} absolute transition-all duration-300 bg-white `}>
-        <p className='mb-10 text-2xl mt-10'>Payment for total: <span className='font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0)}</span></p>
+        <p className='mb-10 text-2xl mt-10'>Payment for total: <span className='font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0).toFixed(2)}</span></p>
         <div className='w-full'><input type="text" className='w-full' placeholder='add a message or note' value={orderNote} onChange={e => setOrderNote(e.target.value)}/></div>
         <button onClick={() => setAdressOpen(true)}>Go back</button>  
         <button onClick={makeOrder}>Procceed to Payment</button>

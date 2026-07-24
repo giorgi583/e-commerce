@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import {toast} from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { CheckCircle, ChevronDown, ChevronUp, XCircle } from 'lucide-react'
 import placeholder from '../assets/placeholder_600x.webp'
 const OredersList = () => {
@@ -11,6 +11,7 @@ const OredersList = () => {
     const dispatch = useDispatch()
     const apiUrl = import.meta.env.VITE_API_URL
     const [orderItems, setOrderItems] = React.useState([])
+    const { user } = useSelector((state) => state.user)
     const [orderStatus, setOrderStatus] = React.useState('')
     const [detailedOrder, setDetailedOrder] = React.useState('')
     const [search, setSearch] = React.useState('')
@@ -104,6 +105,7 @@ const OredersList = () => {
   useEffect(() => {
     getAllOrders()
   },[])
+  if(!user) return <Navigate to='*'/>
   return (
     <>
     <Header/>

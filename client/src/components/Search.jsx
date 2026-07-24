@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Search, SearchIcon, X } from 'lucide-react'
 import placeholder from '../assets/placeholder_600x.webp'
+import { useNavigate } from 'react-router-dom'
 const SearchBar = () => {
     const [open, setOpen] = React.useState(false)
     const [products, setProducts] = React.useState([])
@@ -19,6 +20,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     getProducts()
   }, [search])
+  const navigate = useNavigate()
   return (
     <div className='relative bg-white z-50 rounded-3xl '>
     <div className='relative peer z-40 rounded-3xl'>
@@ -29,13 +31,13 @@ const apiUrl = import.meta.env.VITE_API_URL;
                 {!search && <div>
                 <h2 className='text-lg font-semibold mt-10 mb-5'>Popular</h2>
                 <div className='flex flex-wrap gap-2'>
-                    <button className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Electronics <X className='inline ml-2 size-5'/></button>
-                    <button className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Computers <X className='inline ml-2 size-5'/></button>
-                    <button className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Furniture <X className='inline ml-2 size-5'/></button>
-                    <button className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Travel <X className='inline ml-2 size-5'/></button>
-                    <button className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Speakers <X className='inline ml-2 size-5'/></button>
-                    <button className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Sport <X className='inline ml-2 size-5'/></button>
-                    <button className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Health <X className='inline ml-2 size-5'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Electronics')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Electronics <X className='inline ml-2 size-5'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Computers')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Computers <X className='inline ml-2 size-5'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Furniture')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Furniture <X className='inline ml-2 size-5'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Travel')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Travel <X className='inline ml-2 size-5'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Fitness')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Fitness <X className='inline ml-2 size-5'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Sport')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Sport <X className='inline ml-2 size-5'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Health')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Health  <X className='inline ml-2 size-5'/></button>
                 </div>
                 </div>}
                 <div className=' mt-10'>

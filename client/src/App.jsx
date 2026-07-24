@@ -19,6 +19,7 @@ import AccessDenied from './pages/AccessDenied'
 import Cart from './pages/Cart'
 import OredersList from './pages/OredersList'
 import AllUsers from './pages/AllUsers'
+import ProductDetails from './pages/ProductDetails'
 function App() {
   const user = useSelector(state => state.user)
 const apiUrl = import.meta.env.VITE_API_URL
@@ -72,10 +73,11 @@ useEffect(() => {
     <Route path='/cart' element={<Cart />} />
    <Route path='/admin/products' element={<Products user={'admin'}/>} />
    <Route path='/admin/orders' element={<OredersList />} />
-    <Route path='/access-denied' element={<AccessDenied />} />
     <Route path='/add-product' element={<AddProduct />} />
+    <Route path='/product/:id' element={<ProductDetails />} />
     <Route path='/edit-product/:productId' element={<EditProducts />} />
     <Route path='/profile' element={<Profile />} />
+    <Route path='*' element={<AccessDenied />} />
    </Routes>
     </Suspense>
    </BrowserRouter>

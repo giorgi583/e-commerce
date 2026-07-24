@@ -17,8 +17,8 @@ const addProduct = async (e) => {
   data.discountedPrice = Number(data.discountedPrice) || null
   data.stock = Number(data.stock)
   data.quantity = Number(data.quantity)
-  if(data.price < data.discountedPrice) {
-    toast.error('Discounted price cannot be greater than the original price')
+  if(data.price <= data.discountedPrice) {
+    toast.error('Discounted price cannot be greater or equal than the original price')
     return
   }
   data.category = data.category.charAt(0).toUpperCase() + data.category.slice(1)
@@ -74,13 +74,13 @@ if(loading) return <Loader />
           <label htmlFor="">
             Original price
           </label>
-          <input name='price' required type="number" />
+          <input name='price' step="0.01" required type="number" />
         </div>
         <div className='flex flex-col gap-2'>
-          <label htmlFor="">
+          <label htmlFor="" >
             Discounted price
           </label>
-          <input name='discountedPrice' type="number" />
+          <input name='discountedPrice' step="0.01" type="number" />
         </div>
         <div className='flex flex-col gap-2'>
           <label htmlFor="">

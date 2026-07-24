@@ -1,16 +1,19 @@
 import { Lock, Mail } from 'lucide-react'
 import React from 'react'
 import Header from '../components/Header'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {toast} from 'react-hot-toast'
 import { loginSuccess } from '../slices/userSlice'
 import { useDispatch } from 'react-redux'
+import Loader from '../components/Loader'
 const Login = ({getUser}) => {
     const [error, setError] = React.useState(null)
     const dispatch = useDispatch()
+    const [loading, setLoading] = React.useState(false)
     const apiUrl = import.meta.env.VITE_API_URL
     const navigate = useNavigate()
     async function handleSubmit(e) {
+        setLoading(true)
         e.preventDefault()
         const form = new FormData(e.target)
         const email = form.get('email')
@@ -41,12 +44,13 @@ const Login = ({getUser}) => {
         } catch (error) {
         toast.error(error.message)
         }
+        setLoading(false)
     }
   return (
     <div className='flex flex-col items-center justify-center h-screen gap-10 bg-indigo-50'>
    
     <div>
-        <p className='text-6xl font-bold text-[var(--accent)]'>E-<span className="text-[var(--secondary)]">Buy.</span></p>
+        <Link to='/' className='text-6xl font-bold text-[var(--accent)]'>E-<span className="text-[var(--secondary)]">Buy.</span></Link>
     </div>
     <div className='max-w-lg p-10 shadow bg-white'>
         <h1 className='text-2xl font-bold text-[var(--accent)] my-5'>Login</h1>
@@ -70,6 +74,7 @@ const Login = ({getUser}) => {
             </div>
             <button type="submit">Login</button>
             <p>Don't have an account? <a href="/register" className='text-[var(--secondary)]'>Register</a></p>
+            {loading && <Loader />}
         </form>
     </div>
     </div>

@@ -24,8 +24,8 @@ const updateProduct = async () => {
         toast.error('Please fill required fields');
         return
     }
-    if(product.price < product.discountedPrice) {
-        toast.error('Discounted price cannot be greater than the original price');
+    if(product.price <= product.discountedPrice) {
+        toast.error('Discounted price cannot be greater than or equal to the original price');
         return
     }
     const token = localStorage.getItem('token');
