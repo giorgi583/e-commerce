@@ -3,8 +3,9 @@ import placeholder from '../assets/placeholder_600x.webp'
 import { ShoppingCart } from 'lucide-react'
 import {toast} from 'react-hot-toast'
 import {useNavigate} from 'react-router-dom'
+import Stars from './Stars'
 
-const ProductCard = ({id, name, price, oldPrice, user, quantity, getProducts}) => {
+const ProductCard = ({id, name, price, rating, oldPrice, user, quantity, getProducts}) => {
   const navigate = useNavigate()
 const apiUrl = import.meta.env.VITE_API_URL;
   const deleteProduct = async (id) => {
@@ -73,9 +74,10 @@ const apiUrl = import.meta.env.VITE_API_URL;
       <div className='flex flex-col gap-2'>
         <h3 className='text-lg font-bold line-clamp-2 min-h-[3.5rem]'>{name}</h3>
         <div className='flex gap-2 items-center'>
-        <p className='text-sm font-semibold text-green-800'>${price ? price : oldPrice}</p>
+        <p className='text-lg font-semibold text-green-800'>${price ? price : oldPrice}</p>
        {price && <delete className='text-sm text-[var(--dark-grey)] line-through'>${oldPrice}</delete>}
         </div>
+        <Stars rating={rating}/>
       </div>
       <div className='flex gap-2 items-center'>
        {user !== 'admin' && <button onClick={() => addToCart(id)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md'><ShoppingCart size={20}/></button>}

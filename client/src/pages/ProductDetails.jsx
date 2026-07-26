@@ -32,7 +32,7 @@ const ProductDetails = () => {
     }
     useEffect(() => {
         getProduct();
-    }, [])
+    }, [id])
   return (
     <>
     <Header/>

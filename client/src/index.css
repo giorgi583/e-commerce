@@ -83,7 +83,7 @@ summary::marker {
     animation: dash 1.5s ease-in-out infinite;
   }
    .scrollbar-hide::-webkit-scrollbar {
-    display: none;             /* Chrome, Safari, Opera */
+    display: none;             
   }
 }
 @keyframes slide {
@@ -91,7 +91,7 @@ summary::marker {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-170%);
+    transform: translateX(-185%);
   }
 }
 @keyframes rotate {

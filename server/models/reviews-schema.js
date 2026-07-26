@@ -18,8 +18,8 @@ const ReviewSchema = sequelize.define('reviews', {
             key: 'id'
         }
     },
-    rating: {
-        type: DataTypes.INTEGER,
+    username: {
+        type: DataTypes.STRING,
         allowNull: false
     },
     comment: {

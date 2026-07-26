@@ -1,7 +1,36 @@
 import React from 'react'
 import placeholder from '../assets/placeholder_600x.webp'
-import { LucideArrowUpNarrowWide, ShoppingCart } from 'lucide-react'
+import { Check, LucideArrowUpNarrowWide, ShoppingCart } from 'lucide-react'
+import {toast} from 'react-hot-toast'
 const AboutProduct = ({product}) => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const addToCart = async (id, quantity) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    try {
+      const response = await fetch(`${apiUrl}/cart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ productId: id, quantity: quantity })
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message);
+        if (response.status === 401) {
+          localStorage.removeItem("token");
+          dispatch(logout());
+          toast.error('unauthorized');
+        }
+      }
+      toast.success(result.message);
+      console.log(result);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
   return (
    product && <div id='aboutProduct' className='p-5 px-3 rounded-3xl text-gray-600 font-semibold w-full'>
   <div className='flex gap-20 mb-5 p-2 px-3'>
@@ -36,11 +65,11 @@ const AboutProduct = ({product}) => {
    { product.discountedPrice && <p className='line-through text-sm text-gray-500'>${product.price}</p>}
   </div>
   <div>
-    <button className='text-2xl py-2 px-5 rounded-full'>Buy</button>
+    <div className='text-lg py-2 px-5 rounded bg-amber-100 text-green-600 flex items-center'><Check className='inline mr-2 size-5'/> Free Shipping</div>
   </div>
   </div>
   <div className='flex gap-10 items-center'>
-    <button className='text-xl py-2 px-5 rounded-full flex items-center'><ShoppingCart className='inline mr-2 size-5'/> Add to cart</button>
+    <button onClick={()=> addToCart(product?.id, product?.quantity)} className='text-xl py-2 px-5 rounded-full flex items-center'><ShoppingCart className='inline mr-2 size-5'/> Add to cart</button>
     <button className='text-xl py-2 px-5 rounded-full flex items-center'><LucideArrowUpNarrowWide className='inline mr-2 size-5'/> Compare</button>
   </div>
   </div>

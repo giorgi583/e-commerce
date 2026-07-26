@@ -42,11 +42,12 @@ const apiUrl = import.meta.env.VITE_API_URL;
                 </div>}
                 <div className=' mt-10'>
             {products.length > 0 && search ? products.map(product =>(
-                <div key={product.id} className='flex items-stretch gap-5 my-5 hover:bg-gray-100 cursor-pointer rounded-lg'>
-                  <div className='w-20 h-full'><img className='w-full' src={placeholder} alt="placeholder"></img></div>
+                <div onMouseDown={()=> {navigate(`/product/${product.id}`); setSearch('')}} key={product.id} className='flex items-stretch gap-5 my-4 hover:bg-gray-100 cursor-pointer rounded-lg'>
+                  <div className='w-22 h-full'><img className='w-full' src={placeholder} alt="placeholder"></img></div>
                   <div className='w-full flex flex-col'>
                    <h3 className='text-lg font-semibold'>{product.name}</h3>
-                   <p className='text-[var(--secondary)]'>${product.price}</p>
+                   <p className='text-[var(--secondary)]'>${product.discountedPrice || product.price}</p>
+                   {product.discountedPrice && <span className='line-through text-xs text-gray-500'>${product.price}</span>}
                    </div>
                     </div>
             )): search && <div className='flex flex-col items-center gap-5 p-5 mt-10'><SearchIcon size={30}/> <p>No products found</p></div>}

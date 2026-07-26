@@ -21,9 +21,9 @@ console.log(`${apiURL}/products/categories/${product?.category}`);
     useEffect(() => {
        if (!product?.category) return;
         getProductsByCategory();
-    }, [product?.category]);
+    }, [product]);
   return (
-      <div>
+      <div id='similarProducts'>
      <Slider title={'Similar Products'} data={products}/>
       </div>
 

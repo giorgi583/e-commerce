@@ -35,7 +35,7 @@ const ProductsByCategory = () => {
         <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{category} ({products.length})</h1>
         <div className='grid grid-cols-4 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1'>
             {products && products.map((product, index) => (
-                <ProductCard id={product.id} name={product.name} price={product.discountedPrice} oldPrice={product.price} />
+                <ProductCard id={product.id} rating={product.rating} name={product.name} price={product.discountedPrice} oldPrice={product.price} />
             ))}
         </div>
     </div>
