@@ -190,7 +190,7 @@ if(loading) return <Loader />
          </div>
        )): <div className='flex flex-col items-center justify-center text-3xl gap-20'> 
        <h1 className='font-semibold text-[var(--secondary)]'>Your Cart is Empty!</h1>
-        <p className='text-gray-600 text-xl mb-20'>Please go to products page to add products to your cart</p>
+        <p className='text-gray-600 text-xl mb-20'>Please go to <span onClick={() => navigate('/products')} className='cursor-pointer text-[var(--accent)]'>products page</span> to add products to your cart</p>
         </div>}
       </div>
      {cartItems.length > 0 && <div className='flex flex-col mt-10 '>

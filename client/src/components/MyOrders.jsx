@@ -116,14 +116,14 @@ useEffect(() => {
             if(orderType === 'all') return true
             if(orderType === 'uncompleted') return order.status !== 'delivered' && order.status !== 'cancelled' && order.status !== 'refunded'
             if(orderType === 'completed') return order.status === 'delivered'
-            if(orderType === 'cancelled') return order.status === 'cancelled' || order.status === 'refunded'}).map((order) => <div key={order._id} className='bg-slate-200 p-4 shadow rounded '> 
+            if(orderType === 'cancelled') return order.status === 'cancelled' || order.status === 'refunded'}).map((order) => <div key={order._id} className='bg-slate-100 p-4 shadow rounded relative'> 
         <div className='flex items-center justify-between text-lg'>
           <h3>Order ID: #{order.id} <span className='text-[var(--secondary)] text-2xl font-bold ml-5'>{order.notes || ''}</span></h3>
           <p>Created At: {order.createdAt.split('T')[0]}</p>
         </div>
         <div className='flex items-center justify-between text-lg mt-3'>
           <p className='text-xl font-semibold text-[var(--secondary)]'>Total Amount: ${order.totalAmount}</p>
-          <p className='flex items-center gap-2'>Order Status: {order.status} {order.status === 'delivered' && <CheckCircleIcon size={20} className='text-green-500'/>}</p>
+           <p className={`text-xl font-semibold rounded absolute right-[50%] top-[50%] translate-x-[50%] translate-y-[-50%] p-2 ${order.status === 'delivered' ? 'bg-green-200 text-green-600' : order.status === 'cancelled' ? 'bg-red-200 text-red-600' : 'bg-yellow-200 text-yellow-600'}`}>{order.status}</p>
         </div>
         <div className='flex items-center justify-between'>
         <button onClick={() => getOrderDetails(order.id)} className='flex items-center gap-2 mt-5'>{detailedOrder === order.id ? 'Hide Details' : 'View Details'} {detailedOrder !== order.id ? <ChevronDown/> : <ChevronUp/> }</button>

@@ -113,15 +113,14 @@ const OredersList = () => {
         <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>List of all orders</h1>
         <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search orders by user ID' className='mb-5'></input>
         <div className='flex flex-col gap-10'>
-            {orders.length > 0 ? orders.filter((order) => search ? order.userId == search : true).map((order) => <div key={order._id} className='bg-slate-200 p-4 shadow rounded '> 
+            {orders.length > 0 ? orders.filter((order) => search ? order.userId == search : true).map((order) => <div key={order._id} className='bg-slate-200 p-4 shadow rounded relative'> 
         <div className='flex items-center justify-between text-lg'>
           <h3>Order ID: #{order.id} <span className='ml-10'>User ID: #{order.userId}</span></h3>
           <p>Created At: {order.createdAt.split('T')[0]}</p>
         </div>
         <div className='flex items-center justify-between text-lg mt-3'>
           <p className='text-xl font-semibold text-[var(--secondary)]'>Total Amount: ${order.totalAmount}</p>
-          <p className='text-xl font-semibold grow ml-5 flex items-center gap-2'>Order Status: {order.status} {order.status === 'delivered' && <span className='text-green-500'><CheckCircle/></span>}{order.status === 'cancelled' && <span className='text-red-500 flex items-center gap-2'><XCircle/>{('reason: ' + order.cancelReason)}</span>}</p>
-          <p className='cursor-pointer mr-3 self-end'>Update status: </p>
+          <p className={`text-xl font-semibold rounded absolute right-[50%] top-[50%] translate-x-[50%] translate-y-[-50%] p-2 ${order.status === 'delivered' ? 'bg-green-200 text-green-600' : order.status === 'cancelled' ? 'bg-red-200 text-red-600' : 'bg-yellow-200 text-yellow-600'}`}>{order.status}</p>
           <select onChange={(e) => setOrderStatus(e.target.value)} className='text-lg font-semibold cursor-pointer text-[var(--secondary)]'>
             <option value='pending'>Pending</option>
             <option value='processing'>Processing</option>
