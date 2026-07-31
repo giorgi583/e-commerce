@@ -1,5 +1,5 @@
 import React from 'react'
-import { Phone, Truck, Map, MenuIcon, Search, User2, ShoppingCart, XIcon, Settings, LogOut, Home, LayoutDashboard, ChevronDown, Shirt, LogOutIcon, Package} from 'lucide-react'
+import { Phone, Truck, Map, MenuIcon, Search, User2, ShoppingCart, XIcon, Settings, LogOut, Home, LayoutDashboard, ChevronDown, Shirt, LogOutIcon, Package, Badge} from 'lucide-react'
 import SearchBar from './Search'
 import { NavLink } from 'react-router-dom'
 import { FaProductHunt } from 'react-icons/fa'
@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../slices/userSlice'
 import { useNavigate } from 'react-router-dom'
 
-const Header = () => {
+const Header = ({cartItems}) => {
     const navigate = useNavigate()
     const [open, setOpen] = React.useState(false)
     const [navOpen, setNavOpen] = React.useState(false)
@@ -57,7 +57,7 @@ const Header = () => {
               } {user?.user?.role !== 'admin' && navOpen && <div className='absolute top-[100%] left-0 border border-gray-200 rounded-2xl flex flex-col gap-2 bg-white p-5'>
                 <NavLink to={'/products'} className='flex items-center max-md:hidden p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><Shirt className='inline mr-2 size-5'/> Products</NavLink>
             <NavLink to={'/categories'} className='flex items-center border border-gray-200 p-3 rounded-full max-md:hidden cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><LayoutDashboard className='inline mr-2 size-5'/> Categories</NavLink>
-                <NavLink to={'/cart'} className='flex items-center max-md:hidden gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><ShoppingCart className='inline size-5 max-sm:size-4'/>Cart</NavLink>
+                <NavLink to={'/cart'} className='flex items-center max-md:hidden gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><ShoppingCart className='inline size-5 max-sm:size-4'/>Cart {cartItems > 0 && <div className='bg-[var(--accent)] text-white rounded-full w-4 h-4 flex font-bold items-center justify-center text-xs'>{cartItems}</div>}</NavLink>
                 </div>}
                 {
                  user?.user?.role === 'admin' && <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'>Admin panel</div>   

@@ -35,7 +35,7 @@ const Login = ({getUser}) => {
                 toast.success(data.message)
                 setTimeout(() => {
                     navigate('/')
-                }, 2000)
+                }, 1000)
                 console.log(data)
             }
             else {

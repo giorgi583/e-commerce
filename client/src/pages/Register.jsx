@@ -57,7 +57,7 @@ const Register = () => {
             toast.success(result.message);
             setTimeout(() => {
                 window.location.href = '/login';
-            }, 3000);
+            }, 1000);
         } else {
             throw new Error(result.message);
         }
