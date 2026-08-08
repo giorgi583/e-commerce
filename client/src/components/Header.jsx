@@ -49,11 +49,11 @@ const Header = ({cartItems}) => {
                     <p className='p-3'><LogOut className='inline mr-2 size-5'/> Logout</p>
                    </div>
                 </div>
-            <NavLink to={'/'} ><h1 className='text-3xl font-bold text-[var(--accent)]'>E-<span className="text-[var(--secondary)]">Buy.</span></h1></NavLink>
+            <NavLink to={'/'} ><h1 className='text-3xl font-bold text-[var(--accent)] max-sm:text-2xl'>E-<span className="text-[var(--secondary)]">Buy.</span></h1></NavLink>
             <div className=' min-w-100 max-md:hidden max-w-120 max-xl:max-w-80 max-xl:min-w-0 max-md:max-w-60  max-sm:max-w-50 '> <SearchBar /> </div>
             </div>
             <div className='flex items-center gap-5 relative'>
-              {user?.user?.role !== 'admin' &&  <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'>Navigation <ChevronDown className='inline size-5'/></div>
+              {user?.user?.role !== 'admin' &&  <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200 max-sm:text-xs max-sm:p-1 max-sm:gap-1'>Navigation <ChevronDown className='inline size-5 max-sm:size-4'/></div>
               } {user?.user?.role !== 'admin' && navOpen && <div className='absolute top-[100%] left-0 border border-gray-200 rounded-2xl flex flex-col gap-2 bg-white p-5'>
                 <NavLink to={'/products'} className='flex items-center max-md:hidden p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><Shirt className='inline mr-2 size-5'/> Products</NavLink>
             <NavLink to={'/categories'} className='flex items-center border border-gray-200 p-3 rounded-full max-md:hidden cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><LayoutDashboard className='inline mr-2 size-5'/> Categories</NavLink>

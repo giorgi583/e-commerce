@@ -94,6 +94,46 @@ summary::marker {
     transform: translateX(-185%);
   }
 }
+@media (width<= 800px) {
+  @keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-500%);
+    }
+  }
+}
+@media (width<= 700px) {
+  @keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-700%);
+    }
+  }
+}
+@media (width<= 500px) {
+  @keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-900%);
+    }
+  }
+}
+@media (width<= 400px) {
+  @keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-1000%);
+    }
+  }
+}
 @keyframes rotate {
     100% {
       transform: rotate(360deg);
