@@ -5,7 +5,10 @@ const { sequelize } = require('./utils/db');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
 app.use(cors({
-    origin: 'https://e-commerce-owmt.onrender.com'}));
+    origin: [
+        'https://e-commerce-owmt.onrender.com', 
+        'http://localhost:5173'
+    ],}));
 const swaggerDocument = require('./swagger/swagger.json');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(bodyParser.urlencoded({ extended: false }));
