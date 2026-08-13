@@ -5,10 +5,11 @@ import { NavLink } from 'react-router-dom'
 import { FaProductHunt } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../slices/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const Header = ({cartItems}) => {
     const navigate = useNavigate()
+    const location = useLocation()
     const [open, setOpen] = React.useState(false)
     const [navOpen, setNavOpen] = React.useState(false)
     const user = useSelector(state => state.user)
@@ -53,7 +54,7 @@ const Header = ({cartItems}) => {
             <div className=' min-w-100 max-md:hidden max-w-120 max-xl:max-w-80 max-xl:min-w-0 max-md:max-w-60  max-sm:max-w-50 '> <SearchBar /> </div>
             </div>
             <div className='flex items-center gap-5 relative'>
-              {user?.user?.role !== 'admin' &&  <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200 max-sm:text-xs max-sm:p-1 max-sm:gap-1'>Navigation <ChevronDown className='inline size-5 max-sm:size-4'/></div>
+              {user?.user?.role !== 'admin' &&  <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200 max-md:hidden max-sm:p-1 max-sm:gap-1'>Navigation <ChevronDown className='inline size-5 max-sm:size-4'/></div>
               } {user?.user?.role !== 'admin' && navOpen && <div className='absolute top-[100%] left-0 border border-gray-200 rounded-2xl flex flex-col gap-2 bg-white p-5'>
                 <NavLink to={'/products'} className='flex items-center max-md:hidden p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><Shirt className='inline mr-2 size-5'/> Products</NavLink>
             <NavLink to={'/categories'} className='flex items-center border border-gray-200 p-3 rounded-full max-md:hidden cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><LayoutDashboard className='inline mr-2 size-5'/> Categories</NavLink>
@@ -72,11 +73,12 @@ const Header = ({cartItems}) => {
                {user.user ? <div className='flex items-center gap-3'><NavLink to={'/profile'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>{user?.user?.username}</NavLink> <button onClick={handleLogout} className='flex items-center max-sm:text-xs bg-transparent border text-black border-gray-200 p-3 rounded-full cursor-pointer'><LogOutIcon className='inline mr-2 size-4 max-sm:size-3'/> Logout</button></div> : <NavLink to={'/login'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>Login</NavLink>}
             </div>
         </div> 
-        <div className='fixed bottom-0 border-t bg-white border-gray-200 w-full text-[var(--accent)] z-40 p-3 flex items-center justify-evenly md:hidden'>
-            <div className='flex flex-col items-center justify-center'><Home className='inline mr-2 size-5'/>Home</div>
-            <div className='flex flex-col items-center justify-center'><LayoutDashboard className='inline mr-2 size-5'/>Categories</div>
-            <div className='flex flex-col items-center justify-center'><ShoppingCart className='inline mr-2 size-5'/>Cart</div>
-            <div className='flex flex-col items-center justify-center'><User2 className='inline mr-2 size-5'/>Profile</div>
+        <div className='fixed bottom-0 border-t bg-white border-gray-200 w-full text-[var(--accent)] z-40 flex items-center justify-evenly md:hidden p-1 max-[400px]:py-2'>
+        <div className={`flex flex-col items-center justify-center max-[500px]:text-sm rounded-xl ${location.pathname === '/' ? 'bg-amber-100' : 'bg-white'} p-2`}><Home className='inline size-6' fill={location.pathname === '/' ? 'var(--accent)' : 'none'} onClick={() => navigate('/')} /><p className='max-[400px]:hidden'>Home</p></div>
+            <div className={`flex flex-col items-center justify-center max-[500px]:text-sm rounded-xl ${location.pathname === '/categories' ? 'bg-amber-100' : 'bg-white'} p-2`}><LayoutDashboard className='inline size-6' fill={location.pathname === '/categories' ? 'var(--accent)' : 'none'} onClick={() => navigate('/categories')} /><p className='max-[400px]:hidden'>Categories</p></div>
+            <div className={`flex flex-col items-center justify-center max-[500px]:text-sm rounded-xl ${location.pathname === '/products' ? 'bg-amber-100' : 'bg-white'} p-2`}><Shirt className='inline size-6' fill={location.pathname === '/products' ? 'var(--accent)' : 'none'} onClick={() => navigate('/products')} /><p className='max-[400px]:hidden'>Products</p></div>
+            <div className={`flex flex-col items-center justify-center max-[500px]:text-sm rounded-xl ${location.pathname === '/cart' ? 'bg-amber-100' : 'bg-white'} p-2`}><ShoppingCart className='inline size-6' fill={location.pathname === '/cart' ? 'var(--accent)' : 'none'} onClick={() => navigate('/cart')} /><p className='max-[400px]:hidden'>Cart</p></div>
+            <div className={`flex flex-col items-center justify-center max-[500px]:text-sm rounded-xl ${location.pathname === '/profile' ? 'bg-amber-100' : 'bg-white'} p-2`}><User2 className='inline size-6' fill={location.pathname === '/profile' ? 'var(--accent)' : 'none'} onClick={() => navigate('/profile')} /><p className='max-[400px]:hidden'>Profile</p></div>
         </div>
     </header>
   )

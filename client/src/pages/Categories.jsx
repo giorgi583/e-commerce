@@ -24,7 +24,7 @@ const Categories = () => {
   return (
     <>
       <Header />
-    <div className='max-w-7xl mx-auto py-15'>
+    <div className='max-w-7xl mx-auto py-15 px-10'>
       <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
         <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
         <span><ChevronRight size={20} /></span>

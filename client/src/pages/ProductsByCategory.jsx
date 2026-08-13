@@ -24,7 +24,7 @@ const ProductsByCategory = () => {
   return (
     <>
     <Header />
-    <div className='max-w-7xl mx-auto py-15'>
+    <div className='max-w-7xl mx-auto py-15 px-10'>
         <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
         <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
         <span><ChevronRight size={20} /></span>
@@ -33,7 +33,7 @@ const ProductsByCategory = () => {
         <span className='text-[var(--accent)]'> {category}</span>
       </div>
         <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{category} ({products.length})</h1>
-        <div className='grid grid-cols-4 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1'>
+        <div className='grid grid-cols-4 gap-4 max-lg:grid-cols-3 max-sm:grid-cols-2 max-[500px]:!grid-cols-1'>
             {products && products.map((product, index) => (
                 <ProductCard id={product.id} rating={product.rating} name={product.name} price={product.discountedPrice} oldPrice={product.price} />
             ))}

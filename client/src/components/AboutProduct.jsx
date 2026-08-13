@@ -1,8 +1,10 @@
 import React from 'react'
 import placeholder from '../assets/placeholder_600x.webp'
-import { Check, LucideArrowUpNarrowWide, ShoppingCart } from 'lucide-react'
+import { Check, LucideArrowUpNarrowWide, ShoppingCart, XIcon } from 'lucide-react'
 import {toast} from 'react-hot-toast'
+import SearchBar from './Search'
 const AboutProduct = ({product}) => {
+  const [compareWindow, setCompareWindow] = React.useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
   const addToCart = async (id, quantity) => {
     const token = localStorage.getItem('token');
@@ -70,11 +72,20 @@ const AboutProduct = ({product}) => {
   </div>
   <div className='flex gap-10 items-center'>
     <button onClick={()=> addToCart(product?.id, product?.quantity)} className='text-xl py-2 px-5 rounded-full flex items-center'><ShoppingCart className='inline mr-2 size-5'/> Add to cart</button>
-    <button className='text-xl py-2 px-5 rounded-full flex items-center'><LucideArrowUpNarrowWide className='inline mr-2 size-5'/> Compare</button>
+    <button onClick={() => setCompareWindow(true)} className='text-xl py-2 px-5 rounded-full flex items-center'><LucideArrowUpNarrowWide className='inline mr-2 size-5'/> Compare</button>
   </div>
   </div>
   </div>
   </div>
+  {compareWindow && <div className='fixed top-0 left-0 w-full h-full bg-black/50 z-50 flex items-center justify-center'>
+    <div className='bg-white p-5 rounded-3xl w-1/2 h-1/2 flex flex-col gap-5 relative'>
+      <h2 className='text-2xl font-bold text-[var(--secondary)]'>Select Another Product</h2>
+      <div className='absolute top-5 right-5 cursor-pointer' onClick={() => setCompareWindow(false)}><XIcon/></div>
+      <div className='flex gap-5 w-full'>
+        <SearchBar />
+        <button className='bg-[var(--secondary)] text-white py-2 px-5 rounded-full'>Compare</button>
+         </div>
+    </div> </div>}
     </div>
   )
 }

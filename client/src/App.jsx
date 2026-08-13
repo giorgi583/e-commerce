@@ -20,6 +20,7 @@ import Cart from './pages/Cart'
 import OredersList from './pages/OredersList'
 import AllUsers from './pages/AllUsers'
 import ProductDetails from './pages/ProductDetails'
+import CompareProducts from './pages/CompareProducts'
 function App() {
   const user = useSelector(state => state.user)
 const apiUrl = import.meta.env.VITE_API_URL
@@ -73,6 +74,7 @@ useEffect(() => {
     <Route path='/cart' element={<Cart />} />
    <Route path='/admin/products' element={<Products user={'admin'}/>} />
    <Route path='/admin/orders' element={<OredersList />} />
+   <Route path='/products/compare?id1=:id1&id2=:id2' element={<CompareProducts />} />
     <Route path='/add-product' element={<AddProduct />} />
     <Route path='/product/:id' element={<ProductDetails />} />
     <Route path='/edit-product/:productId' element={<EditProducts />} />

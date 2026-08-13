@@ -141,7 +141,7 @@ if(loading) return <Loader />
   return (
     <>
     <Header />
-    <div className='max-w-7xl mx-auto py-15 overflow-x-hidden relative'>
+    <div className='max-w-7xl mx-auto py-15 px-10 overflow-x-hidden relative'>
         <div className='flex items-center justify-between'>
           <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{user?.username || 'User'}'s Profile</h1>
           <button onClick={deleteAccount} className='text-red-500 bg-white border border-red-500 px-3 py-1 cursor-pointer hover:bg-red-500 hover:text-white'>Delete Account</button>
