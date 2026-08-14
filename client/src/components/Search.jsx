@@ -31,22 +31,22 @@ const apiUrl = import.meta.env.VITE_API_URL;
                 {!search && <div>
                 <h2 className='text-lg font-semibold mt-10 mb-5'>Popular</h2>
                 <div className='flex flex-wrap gap-2'>
-                    <button onMouseDown={()=> { navigate('/categories/Electronics')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Electronics <X className='inline ml-2 size-5'/></button>
-                    <button onMouseDown={()=> { navigate('/categories/Computers')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Computers <X className='inline ml-2 size-5'/></button>
-                    <button onMouseDown={()=> { navigate('/categories/Furniture')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Furniture <X className='inline ml-2 size-5'/></button>
-                    <button onMouseDown={()=> { navigate('/categories/Travel')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Travel <X className='inline ml-2 size-5'/></button>
-                    <button onMouseDown={()=> { navigate('/categories/Fitness')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Fitness <X className='inline ml-2 size-5'/></button>
-                    <button onMouseDown={()=> { navigate('/categories/Sport')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Sport <X className='inline ml-2 size-5'/></button>
-                    <button onMouseDown={()=> { navigate('/categories/Health')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200'>Health  <X className='inline ml-2 size-5'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Electronics')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200 max-lg:text-xs max-lg:gap-1'>Electronics <X className='inline size-5 max-lg:size-4'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Computers')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200 max-lg:text-xs max-lg:gap-1'>Computers <X className='inline size-5 max-lg:size-4'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Furniture')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200 max-lg:text-xs max-lg:gap-1'>Furniture <X className='inline size-5 max-lg:size-4'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Travel')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200 max-lg:text-xs max-lg:gap-1'>Travel <X className='inline size-5 max-lg:size-4'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Fitness')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200 max-lg:text-xs max-lg:gap-1'>Fitness <X className='inline  size-5 max-lg:size-4'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Sport')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200 max-lg:text-xs max-lg:gap-1'>Sport <X className='inline  size-5 max-lg:size-4'/></button>
+                    <button onMouseDown={()=> { navigate('/categories/Health')}} className='text-[var(--secondary)] cursor-pointer hover:bg-gray-300 rounded-full border border-gray-300 px-3 py-1 bg-gray-200 max-lg:text-xs max-lg:gap-1'>Health  <X className='inline size-5 max-lg:size-4'/></button>
                 </div>
                 </div>}
                 <div className=' mt-10'>
             {products.length > 0 && search ? products.map(product =>(
                 <div onMouseDown={()=> {navigate(`/product/${product.id}`); setSearch('')}} key={product.id} className='flex items-stretch gap-5 my-4 hover:bg-gray-100 cursor-pointer rounded-lg'>
-                  <div className='w-22 h-full'><img className='w-full' src={placeholder} alt="placeholder"></img></div>
+                  <div className='w-22 h-full'><img className='w-full h-full' src={placeholder} alt="placeholder"></img></div>
                   <div className='w-full flex flex-col'>
-                   <h3 className='text-lg font-semibold'>{product.name}</h3>
-                   <p className='text-[var(--secondary)]'>${product.discountedPrice || product.price}</p>
+                   <h3 className='text-lg font-semibold max-lg:text-sm w-full'>{product.name}</h3>
+                   <p className='text-[var(--secondary)] max-lg:text-sm'>${product.discountedPrice || product.price}</p>
                    {product.discountedPrice && <span className='line-through text-xs text-gray-500'>${product.price}</span>}
                    </div>
                     </div>

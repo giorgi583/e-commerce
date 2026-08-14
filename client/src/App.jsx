@@ -74,7 +74,7 @@ useEffect(() => {
     <Route path='/cart' element={<Cart />} />
    <Route path='/admin/products' element={<Products user={'admin'}/>} />
    <Route path='/admin/orders' element={<OredersList />} />
-   <Route path='/products/compare?id1=:id1&id2=:id2' element={<CompareProducts />} />
+   <Route path='/products/compare' element={<CompareProducts />} />
     <Route path='/add-product' element={<AddProduct />} />
     <Route path='/product/:id' element={<ProductDetails />} />
     <Route path='/edit-product/:productId' element={<EditProducts />} />

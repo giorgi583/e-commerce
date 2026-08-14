@@ -102,7 +102,7 @@ const Register = () => {
                 <label htmlFor="username">Username</label>
                 <div className='flex items-center relative bg-[var(--light-grey)] rounded-md focus-within:ring-2 focus-within:ring-[var(--secondary)]'>
                 <User className='inline size-5 absolute left-3' color='gray'/>
-                <input className='w-full px-10' type="text" name="username" id="username" required placeholder="Enter your username" />
+                <input className='w-full px-10' type="text" name="username" id="username" maxLength={10} required placeholder="Enter your username" />
                 </div>
             </div>
             </div>

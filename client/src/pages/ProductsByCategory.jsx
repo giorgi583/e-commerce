@@ -25,12 +25,12 @@ const ProductsByCategory = () => {
     <>
     <Header />
     <div className='max-w-7xl mx-auto py-15 px-10'>
-        <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
-        <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
-        <span><ChevronRight size={20} /></span>
-        <NavLink to='/categories' className='flex items-center gap-2 hover:text-[var(--accent)]'> <LayoutDashboard size={20} /> Categories</NavLink>
-        <span><ChevronRight size={20} /></span>
-        <span className='text-[var(--accent)]'> {category}</span>
+        <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit max-sm:text-xs max-sm:gap-1 max-sm:px-2 max-sm:py-1'>
+        <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={16} /> Home</NavLink>
+        <span><ChevronRight size={15} /></span>
+        <NavLink to='/categories' className='flex items-center gap-2 hover:text-[var(--accent)]'> <LayoutDashboard size={16} /> Categories</NavLink>
+        <span><ChevronRight size={15} /></span>
+        <span className='text-[var(--accent)] '>{category}</span>
       </div>
         <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{category} ({products.length})</h1>
         <div className='grid grid-cols-4 gap-4 max-lg:grid-cols-3 max-sm:grid-cols-2 max-[500px]:!grid-cols-1'>

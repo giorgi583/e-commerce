@@ -3,8 +3,13 @@ import placeholder from '../assets/placeholder_600x.webp'
 import { Check, LucideArrowUpNarrowWide, ShoppingCart, XIcon } from 'lucide-react'
 import {toast} from 'react-hot-toast'
 import SearchBar from './Search'
+import SearchCompare from './SearchCompare'
+import {useNavigate, Link} from 'react-router-dom'
+
 const AboutProduct = ({product}) => {
   const [compareWindow, setCompareWindow] = React.useState(false);
+  const navigate = useNavigate();
+  const [selectedProduct, setSelectedProduct] = React.useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
   const addToCart = async (id, quantity) => {
     const token = localStorage.getItem('token');
@@ -81,9 +86,14 @@ const AboutProduct = ({product}) => {
     <div className='bg-white p-5 rounded-3xl w-1/2 h-1/2 flex flex-col gap-5 relative'>
       <h2 className='text-2xl font-bold text-[var(--secondary)]'>Select Another Product</h2>
       <div className='absolute top-5 right-5 cursor-pointer' onClick={() => setCompareWindow(false)}><XIcon/></div>
-      <div className='flex gap-5 w-full'>
-        <SearchBar />
-        <button className='bg-[var(--secondary)] text-white py-2 px-5 rounded-full'>Compare</button>
+      <div className='flex gap-5 w-full items-center'>
+        <div className='flex flex-col gap-3 w-1/2'>
+          <SearchCompare currentId={product?.id} setSelectedProduct={setSelectedProduct}/>
+        </div>
+        <button onClick={() => {setCompareWindow(false); navigate(`/products/compare?id1=${product?.id}&id2=${selectedProduct?.id}`)}} className='bg-[var(--secondary)] text-white py-2 px-5 rounded-full'>Compare</button>
+        <div className='flex flex-col gap-3 items-center'>
+          <p>{product.name}</p> <p>vs</p> <span className='text-[var(--secondary)]'>{selectedProduct?.name || 'Select a product'}</span>
+        </div>
          </div>
     </div> </div>}
     </div>

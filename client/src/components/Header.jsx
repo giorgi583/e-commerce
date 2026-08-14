@@ -51,10 +51,10 @@ const Header = ({cartItems}) => {
                    </div>
                 </div>
             <NavLink to={'/'} ><h1 className='text-3xl font-bold text-[var(--accent)] max-sm:text-2xl'>E-<span className="text-[var(--secondary)]">Buy.</span></h1></NavLink>
-            <div className=' min-w-100 max-md:hidden max-w-120 max-xl:max-w-80 max-xl:min-w-0 max-md:max-w-60  max-sm:max-w-50 '> <SearchBar /> </div>
+            <div className=' min-w-100 max-md:hidden max-w-120 max-xl:max-w-100 max-xl:min-w-100 max-lg:min-w-70 max-lg:max-w-90 '> <SearchBar /> </div>
             </div>
             <div className='flex items-center gap-5 relative'>
-              {user?.user?.role !== 'admin' &&  <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200 max-md:hidden max-sm:p-1 max-sm:gap-1'>Navigation <ChevronDown className='inline size-5 max-sm:size-4'/></div>
+              {user?.user?.role !== 'admin' &&  <div onClick={() => setNavOpen(!navOpen)} className='flex items-center gap-3 p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200 max-md:hidden max-sm:p-1 max-sm:gap-1 max-lg:text-sm max-lg:p-2 max-lg:gap-1'>Navigation <ChevronDown className='inline size-5 max-sm:size-3 max-lg:size-4'/></div>
               } {user?.user?.role !== 'admin' && navOpen && <div className='absolute top-[100%] left-0 border border-gray-200 rounded-2xl flex flex-col gap-2 bg-white p-5'>
                 <NavLink to={'/products'} className='flex items-center max-md:hidden p-3 rounded-full border border-gray-200 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><Shirt className='inline mr-2 size-5'/> Products</NavLink>
             <NavLink to={'/categories'} className='flex items-center border border-gray-200 p-3 rounded-full max-md:hidden cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.2)] shadow-amber-600 transition-all duration-200'><LayoutDashboard className='inline mr-2 size-5'/> Categories</NavLink>
@@ -70,7 +70,7 @@ const Header = ({cartItems}) => {
                 </div>}
             </div>
             <div className='flex items-center gap-5 '>
-               {user.user ? <div className='flex items-center gap-3'><NavLink to={'/profile'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>{user?.user?.username}</NavLink> <button onClick={handleLogout} className='flex items-center max-sm:text-xs bg-transparent border text-black border-gray-200 p-3 rounded-full cursor-pointer'><LogOutIcon className='inline mr-2 size-4 max-sm:size-3'/> Logout</button></div> : <NavLink to={'/login'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>Login</NavLink>}
+               {user.user ? <div className='flex items-center gap-3'><NavLink to={'/profile'} className='flex items-center max-lg:text-sm gap-1'><User2 className='inline size-4'/>{user?.user?.username}</NavLink> <button onClick={handleLogout} aria-label='logout' className='flex items-center max-sm:text-xs bg-transparent border text-black border-gray-200 p-3 rounded-full cursor-pointer max-lg:text-sm max-lg:p-2 max-lg:gap-1'><LogOutIcon className='inline size-5 max-lg:size-4 max-sm:size-3'/></button></div> : <NavLink to={'/login'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>Login</NavLink>}
             </div>
         </div> 
         <div className='fixed bottom-0 border-t bg-white border-gray-200 w-full text-[var(--accent)] z-40 flex items-center justify-evenly md:hidden p-1 max-[400px]:py-2'>
