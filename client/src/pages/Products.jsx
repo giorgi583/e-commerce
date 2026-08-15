@@ -13,6 +13,7 @@ const Products = ({user}) => {
   const [checkedCategories, setCheckedCategories] = React.useState([])
   const [brand, setBrand] = React.useState('')
   const [minPrice, setMinPrice] = React.useState(0)
+  const [showFilters, setShowFilters] = React.useState(false)
   const [maxPrice, setMaxPrice] = React.useState(3000)
   const [name, setName] = React.useState('')
   const [currentPage, setCurrentPage] = React.useState(1)
@@ -48,21 +49,22 @@ useEffect(() => {
   return (
     <>
     <Header />
-    <div className='max-w-7xl mx-auto py-15'>
+    <div className='max-w-7xl mx-auto py-15 px-10 max-sm:px-5'>
        <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
         <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
         <span><ChevronRight size={20} /></span>
         <span className='text-[var(--accent)] flex items-center gap-2'><Shirt size={20} /> Products</span>
       </div>
     <div className='grid grid-cols-4 gap-4 '>
-      <div className='col-span-1 relative'>
+      <div className='col-span-1 relative max-lg:hidden'>
         <Filters name={name} setName={setName} setCurrentPage={setCurrentPage} checkedCategories={checkedCategories} setCheckedCategories={setCheckedCategories} brand={brand} setBrand={setBrand} minPrice={minPrice} setMinPrice={setMinPrice} maxPrice={maxPrice} setMaxPrice={setMaxPrice}/>
       </div>
-      <div className='col-span-3 flex flex-col gap-5'>
-       <div className='flex items-center justify-between'> 
+      <div className='col-span-3 flex flex-col gap-5 max-lg:col-span-4'>
+       <div className='flex items-center justify-between gap-5'> 
         <h1 className='text-2xl font-bold text-[var(--accent)]'>Products</h1> 
         {user === 'admin' && <button onClick={() => navigate('/add-product')} className=' py-2 px-4 rounded-lg flex items-center gap-2'><Plus />Add Product</button>}
-        <div  className='relative w-[200px] '>
+        <div  className='relative w-[250px] flex items-center justify-between gap-2'>
+            <p onClick={() => setShowFilters(!showFilters)} className='text-[var(--accent)] font-semibold hidden max-lg:flex items-center gap-2 p-3 rounded-full bg-gray-100'>Filter <ChevronDown size={20}/></p>
           <div onClick={() => setSortingOpen(!sortingOpen)} className='flex items-center relative bg-[var(--light-grey)] max-w-fit rounded-full py-2 px-3 cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.1)] shadow-amber-500'>
           <p className='cursor-pointer flex items-center gap-2'>Sort <ChevronDown className={sortingOpen ? 'rotate-180 transition-all duration-300' : 'transition-all duration-300'} size={20}/></p>
           </div>
@@ -73,10 +75,10 @@ useEffect(() => {
           <p onClick={() => {setSortingOpen(false); setSort('price'); setOrder('asc')}} className={`hover:bg-gray-50 cursor-pointer rounded-lg p-2 ${sort === 'price' && order === 'asc' ? 'bg-gray-100' : 'bg-white'}`}>Price: Low to High</p>
           <p onClick={() => {setSortingOpen(false); setSort('price'); setOrder('desc')}} className={`hover:bg-gray-50 cursor-pointer rounded-lg p-2 ${sort === 'price' && order === 'desc' ? 'bg-gray-100' : 'bg-white'}`}>Price: High to Low</p>
           </div>}
-          
-          </div>
+          {showFilters && <div className='absolute top-[100%] left-0 w-full z-20 bg-white'><Filters name={name} setName={setName} setCurrentPage={setCurrentPage} checkedCategories={checkedCategories} setCheckedCategories={setCheckedCategories} brand={brand} setBrand={setBrand} minPrice={minPrice} setMinPrice={setMinPrice} maxPrice={maxPrice} setMaxPrice={setMaxPrice}/></div>}
+        </div>
        </div>
-        <div className='grid grid-cols-4 gap-4'>
+        <div className='grid grid-cols-4 gap-4 max-xl:grid-cols-3 max-sm:grid-cols-2 max-[450px]:!grid-cols-1'>
          {products.map((product, index) => (
            <ProductCard id={product.id} name={product.name} rating={product.rating} price={product.discountedPrice} oldPrice={product.price} user={user} quantity={product.quantity} getProducts={getProducts}/>
          ))}

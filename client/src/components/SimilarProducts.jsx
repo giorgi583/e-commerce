@@ -23,10 +23,9 @@ console.log(`${apiURL}/products/categories/${product?.category}`);
         getProductsByCategory();
     }, [product]);
   return (
-      <div id='similarProducts'>
+      <div  id='similarProducts'>
      <Slider title={'Similar Products'} data={products}/>
       </div>
-
   )
 }
 

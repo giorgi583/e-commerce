@@ -39,8 +39,8 @@ const AboutProduct = ({product}) => {
     }
   }
   return (
-   product && <div id='aboutProduct' className='p-5 px-3 rounded-3xl text-gray-600 font-semibold w-full'>
-  <div className='flex gap-20 mb-5 p-2 px-3'>
+   product && <div id='aboutProduct' className='p-5 rounded-3xl text-gray-600 font-semibold w-full'>
+  <div className='flex gap-20 mb-5 p-2 px-3 max-xl:gap-10 max-lg:gap-5 items-center max-md:flex-col max-md:items-center'>
  <div className='grid grid-cols-5 gap-3'>
    <div className='max-w-108 col-span-5'>
     <img src={placeholder} alt={product.name} />
@@ -72,12 +72,12 @@ const AboutProduct = ({product}) => {
    { product.discountedPrice && <p className='line-through text-sm text-gray-500'>${product.price}</p>}
   </div>
   <div>
-    <div className='text-lg py-2 px-5 rounded bg-amber-100 text-green-600 flex items-center'><Check className='inline mr-2 size-5'/> Free Shipping</div>
+    <div className='text-lg py-2 px-5 rounded bg-amber-100 text-green-600 flex items-center max-lg:text-base'><Check className='inline mr-2 size-5'/> Free Shipping</div>
   </div>
   </div>
   <div className='flex gap-10 items-center'>
-    <button onClick={()=> addToCart(product?.id, product?.quantity)} className='text-xl py-2 px-5 rounded-full flex items-center'><ShoppingCart className='inline mr-2 size-5'/> Add to cart</button>
-    <button onClick={() => setCompareWindow(true)} className='text-xl py-2 px-5 rounded-full flex items-center'><LucideArrowUpNarrowWide className='inline mr-2 size-5'/> Compare</button>
+    <button onClick={()=> addToCart(product?.id, product?.quantity)} aria-label='add to cart' className='text-xl py-2 px-5 rounded-full flex items-center max-lg:text-base'><ShoppingCart className='inline mr-2 size-5'/><p className='font-bold max-xl:hidden'>Add to cart</p></button>
+    <button onClick={() => setCompareWindow(true)} className='text-xl py-2 px-5 rounded-full flex items-center max-lg:text-base'><LucideArrowUpNarrowWide className='inline mr-2 size-5'/> Compare</button>
   </div>
   </div>
   </div>

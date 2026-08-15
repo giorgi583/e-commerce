@@ -36,12 +36,12 @@ const ProductDetails = () => {
   return (
     <>
     <Header/>
-    <div className='max-w-7xl mx-auto py-15'>
-<div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
-        <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
-        <span><ChevronRight size={20} /></span>
-        <NavLink to='/products' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Shirt size={20} /> Products</NavLink>
-        <span><ChevronRight size={20} /></span>
+    <div className='max-w-7xl mx-auto py-15 px-10 max-sm:px-5'>
+<div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit max-sm:text-xs'>
+        <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={17} /> Home</NavLink>
+        <span><ChevronRight size={17} /></span>
+        <NavLink to='/products' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Shirt size={17} /> Products</NavLink>
+        <span><ChevronRight size={17} /></span>
         <span className='text-[var(--accent)]'>{product?.name}</span>
       </div>
       <div className='flex items-center gap-4 mb-5 px-3 rounded-xl bg-gray-200 text-gray-600 font-semibold max-w-fit'>
@@ -49,7 +49,7 @@ const ProductDetails = () => {
         <a onClick={() => setSection('reviews')} className={section === 'reviews' ? 'text-[var(--accent)] border-b-amber-700 border-b-3 p-2' : 'p-2'} href='#reviews'>Reviews</a>
         <a onClick={() => setSection('similarProducts')} className={section === 'similarProducts' ? 'text-[var(--accent)] border-b-amber-700 border-b-3 p-2' : 'p-2'} href='#similarProducts'>Similar</a>
       </div>
-      <div className='flex flex-col items-center gap-5 w-full'>
+      <div className='flex flex-col items-stretch gap-5 w-full'>
       <AboutProduct product={product} />
       <Reviews product={product} />
       <SimilarProducts product={product} />

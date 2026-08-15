@@ -70,7 +70,7 @@ const Header = ({cartItems}) => {
                 </div>}
             </div>
             <div className='flex items-center gap-5 '>
-               {user.user ? <div className='flex items-center gap-3'><NavLink to={'/profile'} className='flex items-center max-lg:text-sm gap-1'><User2 className='inline size-4'/>{user?.user?.username}</NavLink> <button onClick={handleLogout} aria-label='logout' className='flex items-center max-sm:text-xs bg-transparent border text-black border-gray-200 p-3 rounded-full cursor-pointer max-lg:text-sm max-lg:p-2 max-lg:gap-1'><LogOutIcon className='inline size-5 max-lg:size-4 max-sm:size-3'/></button></div> : <NavLink to={'/login'} className='flex items-center max-sm:text-xs'><User2 className='inline mr-2 size-4 max-sm:size-3'/>Login</NavLink>}
+               {user.user ? <div className='flex items-center gap-3'><NavLink to={'/profile'} className='flex items-center max-lg:text-sm gap-1'><User2 className='inline size-4'/>{user?.user?.username}</NavLink> <button onClick={handleLogout} aria-label='logout' className='flex items-center max-sm:text-xs bg-transparent border text-black border-gray-200 p-3 rounded-full cursor-pointer max-lg:text-sm max-lg:p-2 max-lg:gap-1'><LogOutIcon className='inline size-5 max-lg:size-4 max-sm:size-3'/></button></div> : <NavLink to={'/login'} className='flex items-center'><User2 className='inline mr-2 size-4 '/>Login</NavLink>}
             </div>
         </div> 
         <div className='fixed bottom-0 border-t bg-white border-gray-200 w-full text-[var(--accent)] z-40 flex items-center justify-evenly md:hidden p-1 max-[400px]:py-2'>

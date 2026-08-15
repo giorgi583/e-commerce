@@ -29,7 +29,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
             </div>
             <div className='hidden peer-focus-within:block absolute top-0 left-0 w-full px-5 py-4 bg-white z-30 rounded-3xl max-sm:rounded-2xl max-h-[400px] overflow-scroll scrollbar-hide'>
                 <div className=' mt-10'>
-            {products.length > 0 && search ? products.map(product =>(
+            {products.length > 0 && search ? products.filter(product => product.id !== currentId).map(product =>(
                 <div onMouseDown={()=> { setSelectedProduct(product); setSearch('')}} key={product.id} className='flex items-stretch gap-5 my-4 hover:bg-gray-100 cursor-pointer rounded-lg'>
                   <div className='w-22 h-full'><img className='w-full h-full' src={placeholder} alt="placeholder"></img></div>
                   <div className='w-full flex flex-col'>
