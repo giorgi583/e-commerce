@@ -11,7 +11,7 @@ const OredersList = () => {
     const dispatch = useDispatch()
     const apiUrl = import.meta.env.VITE_API_URL
     const [orderItems, setOrderItems] = React.useState([])
-    const { user } = useSelector((state) => state.user)
+    const { user, loading } = useSelector((state) => state.user)
     const [orderStatus, setOrderStatus] = React.useState('')
     const [detailedOrder, setDetailedOrder] = React.useState('')
     const [search, setSearch] = React.useState('')
@@ -105,24 +105,24 @@ const OredersList = () => {
   useEffect(() => {
     getAllOrders()
   },[])
-  if(!user) return <Navigate to='*'/>
+  if(!user && !loading) return <Navigate to='*'/>
   return (
     <>
     <Header/>
-    <div className='max-w-7xl mx-auto py-15'>
+    <div className='max-w-7xl mx-auto py-15 px-10 max-sm:px-5'>
         <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>List of all orders</h1>
         <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search orders by user ID' className='mb-5'></input>
         <div className='flex flex-col gap-10'>
             {orders.length > 0 ? orders.filter((order) => search ? order.userId == search : true).map((order) => <div key={order._id} className='bg-slate-200 p-4 shadow rounded relative'> 
         <div className='flex items-center justify-between text-lg'>
-          <h3>Order ID: #{order.id} <span className='ml-10'>User ID: #{order.userId}</span></h3>
-          <p>Created At: {order.createdAt.split('T')[0]}</p>
+          <h3 className='text-xl max-md:text-lg'>Order ID: #{order.id} <span className='ml-10'>User ID: #{order.userId}</span></h3>
+          <p className='text-lg max-md:text-sm'>Created At: {order.createdAt.split('T')[0]}</p>
         </div>
         <div className='flex items-center justify-between text-lg mt-3'>
-          <p className='text-xl font-semibold text-[var(--secondary)]'>Total Amount: ${order.totalAmount}</p>
-          <p className={`text-xl font-semibold rounded absolute right-[50%] top-[50%] translate-x-[50%] translate-y-[-50%] p-2 ${order.status === 'delivered' ? 'bg-green-200 text-green-600' : order.status === 'cancelled' ? 'bg-red-200 text-red-600' : 'bg-yellow-200 text-yellow-600'}`}>{order.status}</p>
-          <select onChange={(e) => setOrderStatus(e.target.value)} className='text-lg font-semibold cursor-pointer text-[var(--secondary)]'>
-            <option value='pending'>Pending</option>
+          <p className='text-xl font-semibold text-[var(--secondary)] max-md:text-lg'>Total Amount: ${order.totalAmount}</p>
+          <p className={`text-lg font-semibold rounded absolute right-[50%] max-md:text-base top-17 translate-x-[50%] p-2 ${order.status === 'delivered' ? 'bg-green-100 text-green-600' : order.status === 'cancelled' ? 'bg-red-100 text-red-600' : 'bg-yellow-100 text-yellow-600'}`}>{order.status}</p>
+          <select onChange={(e) => setOrderStatus(e.target.value)} className='text-lg font-semibold max-sm:text-base cursor-pointer text-[var(--secondary)]'>
+            <option value='pending'>Pending</option>  
             <option value='processing'>Processing</option>
             <option value='shipped'>Shipped</option>
             <option value='delivered'>Delivered</option>
@@ -134,7 +134,7 @@ const OredersList = () => {
         <div className='mt-5 flex items-center justify-between'>
         <button onClick={() => getOrderDetails(order.id)} className='flex items-center gap-2 mt-5'>{detailedOrder === order.id ? 'Hide Details' : 'View Details'} {detailedOrder !== order.id ? <ChevronDown/> : <ChevronUp/> }</button>
         <div>
-            <p>Shipping Address: {order.shippingAddress.country}, {order.shippingAddress.city}, {order.shippingAddress.street},  {order.shippingAddress.zipCode}</p>
+            <p className='text-base max-md:text-sm'>Shipping Address: {order.shippingAddress.country}, {order.shippingAddress.city}, {order.shippingAddress.street},  {order.shippingAddress.zipCode}</p>
         </div>
         </div>
         {(orderItems.length > 0 && detailedOrder === order.id) && (<div className='mt-5'>

@@ -168,7 +168,7 @@ if(loading) return <Loader />
   return (
     <>
     <Header cartItems={cartItems?.length}/>
-    <div className='max-w-7xl mx-auto py-15 px-10 overflow-x-hidden relative'>
+    <div className='max-w-7xl mx-auto py-15 px-10 overflow-x-hidden relative max-sm:px-5'>
       <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
         <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
         <span><ChevronRight size={20} /></span>
@@ -181,12 +181,14 @@ if(loading) return <Loader />
       <div className='flex flex-col gap-10'>
        {cartItems.length > 0 ? cartItems.map((item, index) => (
          <div key={index} className='w-full h-30 flex border border-gray-300 items-center rounded-2xl p-3 relative'>
-          <div className='max-w-25 h-full border border-gray-300 p-1'> <img className='w-full h-full' src={placeholder} alt="picture" /> </div>
-          <div className='flex flex-col gap-2 ml-5'> <h3 className='font-semibold text-2xl'>{item.product.name}</h3> 
-          <div className='flex items-center gap-5'> <p>Unit Price: ${item.unitPrice}</p> 
-               <p>Quantity: {item.quantity}</p> <button onClick={() => {updateQuantity(item.product.id, item.quantity+1)}} className='bg-gray-100 w-6 h-6 rounded-full text-black border border-gray-300 p-0 m-0 flex items-center justify-center'><Plus size={12} /></button>
-               <button onClick={() => {updateQuantity(item.product.id, item.quantity-1)}} className='bg-gray-100 w-6 h-6 rounded-full text-black border border-gray-300 p-0 m-0 flex items-center justify-center'><Minus size={12} /></button> </div></div>
-         <button onClick={()=> deleteItem(item.product.id)} className='absolute top-10 right-5'><Trash2 size={20} /></button>
+          <div className='max-w-25 max-sm:max-w-20 h-full border border-gray-300 p-1'> <img className='w-full h-full' src={placeholder} alt="picture" /> </div>
+          <div className='flex flex-col gap-2 ml-5'> <h3 className='font-semibold text-2xl max-sm:text-lg'>{item.product.name}</h3> 
+          <div className='flex items-center gap-5 max-sm:flex-col max-sm:items-start max-sm:gap-2'> <p>Unit Price: ${item.unitPrice}</p> 
+              <div className='flex items-center gap-2 '> <p>Quantity: {item.quantity}</p> 
+                 <button onClick={() => {updateQuantity(item.product.id, item.quantity+1)}} className='bg-gray-100 w-6 h-6 rounded-full text-black border border-gray-300 p-0 m-0 flex items-center justify-center'><Plus size={12} /></button>
+                 <button onClick={() => {updateQuantity(item.product.id, item.quantity-1)}} className='bg-gray-100 w-6 h-6 rounded-full text-black border border-gray-300 p-0 m-0 flex items-center justify-center'><Minus size={12} /></button>
+               </div> </div></div>
+         <button onClick={()=> deleteItem(item.product.id)} className='absolute top-10 right-5 max-sm:right-2 max-sm:p-1'><Trash2 size={18} /></button>
          </div>
        )): <div className='flex flex-col items-center justify-center text-3xl gap-20'> 
        <h1 className='font-semibold text-[var(--secondary)]'>Your Cart is Empty!</h1>
@@ -243,7 +245,7 @@ if(loading) return <Loader />
         </div>
          <div className={`flex flex-col justify-between gap-5 w-full ${adressOpen ? 'translate-x-[170%]' : 'translate-x-0'} absolute transition-all duration-300 bg-white `}>
         <p className='mb-10 text-2xl mt-10'>Payment for total: <span className='font-semibold'>${cartItems.reduce((acc, item) => acc + item.unitPrice * item.quantity, 0).toFixed(2)}</span></p>
-        <div className='w-full'><input type="text" className='w-full' placeholder='add a message or note' value={orderNote} onChange={e => setOrderNote(e.target.value)}/></div>
+        <div className='w-full'><input type="text" className='w-full' placeholder='add a short message' maxLength={15} value={orderNote} onChange={e => setOrderNote(e.target.value)}/></div>
         <button onClick={() => setAdressOpen(true)}>Go back</button>  
         <button onClick={makeOrder}>Procceed to Payment</button>
         </div>

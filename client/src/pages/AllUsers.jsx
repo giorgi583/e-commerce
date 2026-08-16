@@ -31,15 +31,15 @@ const AllUsers = () => {
     useEffect(() => {
         getUsers();
     }, [])
-    if(!user) return <Navigate to='*'/>
+    if(!user && !loading) return <Navigate to='*'/>
   return (
     <>
     <Header/>
-    <div className='max-w-7xl mx-auto py-15'>
+    <div className='max-w-7xl mx-auto py-15 px-10 max-sm:px-5'>
         <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>All Users</h1>
         <div>
             <input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder='Search by username' className='border border-gray-300 p-3 px-5 mb-10 max-sm:p-1 rounded-full  focus:outline-none focus:ring-2 focus:ring-[var(--accent)] transition-all duration-200'></input>
-            <div>
+            <div className='overflow-x-auto'>
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         <tr>

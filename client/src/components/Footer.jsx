@@ -32,7 +32,7 @@ const Footer = () => {
             <p className='mt-3 max-[500px]:text-sm flex gap-2 items-center'>Linkedin <FaLinkedin/></p>
         </div>
         </div>
-        <div className='text-center border-t border-gray-400 py-5'>
+        <div className='text-center border-t border-gray-400 py-5 max-md:pb-20'>
             <p>Copyright © 2026 E-Buy. All rights reserved</p>
         </div>
     </div>

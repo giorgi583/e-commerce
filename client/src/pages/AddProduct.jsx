@@ -44,10 +44,10 @@ const addProduct = async (e) => {
     toast.error(error.message)
   }
 }
-if(!user && !loading) return <Navigate to='/login' />
+if(user?.role !== 'admin' && !loading) return <Navigate to='/login' />
 if(loading) return <Loader />
   return (
-    <div className='max-w-7xl mx-auto py-15'>
+    <div className='max-w-7xl mx-auto py-15 px-10 max-sm:px-5'>
       <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
         <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
         <span><ChevronRight size={20} /></span>
@@ -57,7 +57,7 @@ if(loading) return <Loader />
       </div>
       <h1 className='text-2xl font-bold text-[var(--accent)]'>Add Product</h1>
      
-      <form onSubmit={addProduct} className='grid grid-cols-2 gap-4 mt-5 border-2 p-10 border-[var(--light-grey)] rounded-2xl'>
+      <form onSubmit={addProduct} className='grid grid-cols-2 gap-4 mt-5 border-2 p-10 border-[var(--light-grey)] rounded-2xl max-sm:grid-cols-1 max-sm:p-5'>
         <div className='flex flex-col gap-2'>
           <label htmlFor="">
             Product Name

@@ -56,12 +56,12 @@ const updateProduct = async () => {
     }
 }
 console.log(typeof product.price)
-if (!user && !loading) {
+if (user?.role !== 'admin' && !loading) {
     return <Navigate to='/login'/>
 }
 if(loading) return <Loader />
   return (
-  product &&  <div className='max-w-7xl mx-auto py-15'>
+  product &&  <div className='max-w-7xl mx-auto py-15 px-10 max-sm:px-5'>
     <div className='flex items-center gap-2 mb-5 p-2 px-3 rounded-full bg-gray-200 text-gray-600 font-semibold max-w-fit'>
         <NavLink to='/' className='flex items-center gap-2 hover:text-[var(--accent)]'> <Home size={20} /> Home</NavLink>
         <span><ChevronRight size={20} /></span>
@@ -70,7 +70,7 @@ if(loading) return <Loader />
         <span className='text-[var(--accent)] flex items-center gap-2'><Pencil size={20} /> Edit Product</span>
       </div>
       <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>Edit Product</h1>
-      <div className='grid grid-cols-2 gap-4 mt-5 border-2 p-10 border-[var(--light-grey)] rounded-2xl'>
+      <div className='grid grid-cols-2 gap-4 mt-5 border-2 p-10 border-[var(--light-grey)] rounded-2xl max-sm:grid-cols-1'>
       <div className='flex flex-col'>
         <label htmlFor="">Product Name</label>
         <input type="text" value={product?.name} onChange={(e)=> setProduct({...product, name: e.target.value})}/>

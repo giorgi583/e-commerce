@@ -1,6 +1,6 @@
 import React from 'react'
 import placeholder from '../assets/placeholder_600x.webp'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Trash2 } from 'lucide-react'
 import {toast} from 'react-hot-toast'
 import {useNavigate} from 'react-router-dom'
 import Stars from './Stars'
@@ -83,7 +83,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
        {user !== 'admin' && <button onClick={() => addToCart(id)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md'><ShoppingCart size={20}/></button>}
         <button onClick={() => navigate(`/product/${id}`)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md grow'>Details</button>
         {user === 'admin' && <button onClick={() => navigate(`/edit-product/${id}`)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md '>Edit</button>}
-        {user === 'admin' && <button onClick={() => deleteProduct(id)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md '>Delete</button>}
+        {user === 'admin' && <button aria-label='delete product' onClick={() => deleteProduct(id)} className='bg-[var(--secondary)] text-white py-2 px-2 rounded-md '><Trash2 size={20}/></button>}
       </div>
     </div>
   )

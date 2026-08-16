@@ -118,7 +118,7 @@ const Reviews = ({product}) => {
     getReviews();
   }, [product]);
   return (
-    <div id='reviews' className='w-full bg-slate-50 p-5 rounded-2xl px-10 relative pb-15'>
+    <div id='reviews' className='w-full bg-slate-50 p-5 rounded-2xl px-10 relative pb-15 max-sm:px-5'>
 <div className='flex items-center justify-between w-full mb-5 max-sm:flex-col max-sm:items-start gap-5'>
   <h2 className='text-2xl font-bold text-[var(--accent)]'>Reviews</h2>
   <h3 className='text-2xl font-bold flex items-center gap-3'>Rating ({product?.rating}) <Stars rating={product?.rating}/></h3>
@@ -129,7 +129,7 @@ const Reviews = ({product}) => {
 </div>
 {reviews?.length > 0 ? reviews.map((review, index) => {
   if(index < displayedReviews) return (
-  <div className='my-5 p-5 bg-white rounded-2xl flex items-center gap-3 relative max-sm:flex-col' style={{backgroundColor: user?.username === review.username ? '#E0E7FF' : ""}} key={index}>
+  <div className='my-5 p-5 bg-white rounded-2xl flex items-center max-sm:items-start gap-3 relative max-sm:flex-col break-all' style={{backgroundColor: user?.username === review.username ? '#E0E7FF' : ""}} key={index}>
     <div className='rounded-full w-15 h-15 flex items-center justify-center bg-gray-50 max-sm:hidden'><User size={20} className='mx-auto'/></div>
     <div className='flex flex-col gap-3'>
       <div className='flex items-center gap-3'>

@@ -83,11 +83,11 @@ const AboutProduct = ({product}) => {
   </div>
   </div>
   {compareWindow && <div className='fixed top-0 left-0 w-full h-full bg-black/50 z-50 flex items-center justify-center'>
-    <div className='bg-white p-5 rounded-3xl w-1/2 h-1/2 flex flex-col gap-5 relative'>
+    <div className='bg-white p-5 rounded-3xl w-1/2 h-1/2 max-lg:w-3/4 max-lg:h-4/5 max-sm:w-9/10 flex flex-col gap-5 relative'>
       <h2 className='text-2xl font-bold text-[var(--secondary)]'>Select Another Product</h2>
       <div className='absolute top-5 right-5 cursor-pointer' onClick={() => setCompareWindow(false)}><XIcon/></div>
-      <div className='flex gap-5 w-full items-center'>
-        <div className='flex flex-col gap-3 w-1/2'>
+      <div className='flex gap-5 w-full max-md:flex-col items-center'>
+        <div className='flex flex-col gap-3 w-1/2 max-md:w-4/5'>
           <SearchCompare currentId={product?.id} setSelectedProduct={setSelectedProduct}/>
         </div>
         <button onClick={() => {setCompareWindow(false); navigate(`/products/compare?id1=${product?.id}&id2=${selectedProduct?.id}`)}} className='bg-[var(--secondary)] text-white py-2 px-5 rounded-full'>Compare</button>

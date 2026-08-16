@@ -141,7 +141,7 @@ if(loading) return <Loader />
   return (
     <>
     <Header />
-    <div className='max-w-7xl mx-auto py-15 px-10 overflow-x-hidden relative'>
+    <div className='max-w-7xl mx-auto py-15 px-10 overflow-x-hidden relative max-sm:px-5'>
         <div className='flex items-center justify-between'>
           <h1 className='text-2xl font-bold text-[var(--accent)] mb-10'>{user?.username || 'User'}'s Profile</h1>
           <button onClick={deleteAccount} className='text-red-500 bg-white border border-red-500 px-3 py-1 cursor-pointer hover:bg-red-500 hover:text-white'>Delete Account</button>
@@ -153,9 +153,9 @@ if(loading) return <Loader />
       </div>
         <div className='flex items-center flex-col p-5 rounded-4xl bg-amber-50 border border-amber-100 relative'> 
           <button onClick={() => {setEditPanelOpen(!editPanelOpen); setEditedUserInfo({...userInfo})}} className='absolute top-5 right-5 cursor-pointer '><Pen className='inline mr-2 size-5'/> Edit</button>
-          <div className='flex items-center justify-between gap-5'>
-          <div className='flex items-center w-30 h-30 rounded-full bg-amber-100 justify-center'><User2 className='size-15'/></div><div className='mt-5'><h2 className='text-3xl font-bold text-[var(--secondary)]'>Profile information</h2></div></div>
-          <div className='mt-10 grid grid-cols-3 gap-5'>
+          <div className='flex items-center justify-between gap-5 max-sm:flex-col max-sm:gap-2 max-sm:items-start'>
+          <div className='flex items-center w-30 h-30 max-sm:w-20 max-sm:h-20 rounded-full bg-amber-100 justify-center '><User2 className='size-15 max-sm:size-10'/></div><div className='mt-5'><h2 className='text-3xl font-bold text-[var(--secondary)] max-md:text-2xl'>Profile information</h2></div></div>
+          <div className='mt-10 grid grid-cols-3 gap-5 max-md:grid-cols-2 max-sm:grid-cols-1 max-sm:gap-2'>
             <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>First Name: <p className='text-lg text-black'>{userInfo?.firstName}</p></p></div>
             <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>Last Name: <p className='text-lg text-black'>{userInfo?.lastName}</p></p></div>
             <div className='text-[var(--secondary)] rounded-xl p-2 hover:bg-amber-300/10 cursor-pointer '><p className='text-xl font-semibold'>Username: <p className='text-lg text-black'>{user?.username}</p></p></div>
@@ -167,11 +167,11 @@ if(loading) return <Loader />
           </div>
         </div>
         {editPanelOpen && <div className='flex items-center mt-10 flex-col p-5 rounded-4xl bg-amber-50 border border-amber-100 relative'>
-          <button onClick={() => {handleSave(); setEditPanelOpen(!editPanelOpen)}} className='absolute top-5 right-25 cursor-pointer flex items-center gap-2'><Save /> Save</button>
-          <button className='absolute top-5 right-5 cursor-pointer' onClick={() => {setEditPanelOpen(!editPanelOpen)}}><XIcon  size={20}/></button>
-          <button onClick={() => {setChangePasswordOpen(!changePasswordOpen)}} className='absolute top-5 left-5 cursor-pointer flex items-center gap-2'>Change password</button>
-          <h2 className='text-3xl font-bold text-[var(--accent)] mb-10'>Edit Panel</h2>
-          <div className='grid grid-cols-2 gap-5'>
+          <button onClick={() => {handleSave(); setEditPanelOpen(!editPanelOpen)}} className='absolute top-5 right-25 cursor-pointer flex items-center gap-2 max-sm:p-1 max-sm:text-sm max-sm:right-15 max-sm:gap-1'><Save className='inline mr-2 size-5'/> Save</button>
+          <button aria-label='close' className='absolute top-5 right-5 cursor-pointer max-sm:p-1 max-sm:text-sm' onClick={() => {setEditPanelOpen(!editPanelOpen)}}><XIcon  size={20}/></button>
+          <button onClick={() => {setChangePasswordOpen(!changePasswordOpen)}} className='absolute top-5 left-5 cursor-pointer flex items-center gap-2 max-sm:p-1 max-sm:text-sm'>Change password</button>
+          <h2 className='text-3xl font-bold text-[var(--accent)] mb-10 max-sm:mt-15'>Edit Panel</h2>
+          <div className='grid grid-cols-2 gap-5 max-sm:grid-cols-1'>
           <div>
             <label htmlFor="">First Name</label>
             <input required type="text" value={editedUserInfo?.firstName || ''} onChange={(e)=> setEditedUserInfo({...editedUserInfo, firstName: e.target.value})} placeholder='First Name' className='border border-gray-200 p-2 w-full' />
