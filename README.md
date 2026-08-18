@@ -1,272 +1,239 @@
-# E-Commerce Backend API
+# E-buy 🛒
 
-A RESTful e-commerce backend built with **Express.js**, **PostgreSQL**, and **Sequelize ORM**. The API provides user authentication, product management, shopping cart functionality, order processing, and product reviews.
+E-buy is a full-stack e-commerce web application built as a learning project to practice modern frontend and backend web development. The application provides a complete shopping experience for customers, along with an administration interface for managing products, users, and orders.
 
-## Features
+## 🚀 Features
 
-### Authentication & Authorization
+### 👤 Customer Features
 
-* User registration
-* User login
-* JWT-based authentication
-* Role-based access control
-* Roles:
+- 🔐 User registration and authentication
+- 🏠 Product browsing
+- 🔎 Product search
+- 📄 Product pagination
+- 🏷️ Product filtering
+- ↕️ Product sorting
+- 📋 Detailed product pages
+- ⚖️ Product comparison
+- ⭐ Product reviews
+- 🛒 Add products to cart
+- 📦 Place orders
+- 📋 View previous orders
+- 👤 User profile page
 
-  * Admin
-  * Customer
-* Password hashing with bcrypt
+### 🛠️ Admin Features
 
-### Product Management
+Administrators have access to additional functionality for managing the store:
 
-* Create products (Admin)
-* Update products (Admin)
-* Delete products (Admin)
-* Retrieve all products
-* Retrieve product details
-* Product search
-* Product filtering
-* Product sorting
-* Pagination support
+- 👥 View all registered users
+- 📦 View all orders
+- 🔄 Update order statuses
+- ➕ Add new products
+- ✏️ Edit existing products
+- 🗑️ Delete products
 
-### Shopping Cart
+## 🧰 Technologies
 
-* Add products to cart
-* Update cart item quantities
-* Remove products from cart
-* View current cart
+### Frontend
 
-### Order Management
-
-* Create orders
-* View order history
-* View order details
-* Store shipping information
-* Track order status
-
-### Reviews
-
-* Create product reviews
-* Update reviews
-* Delete reviews
-* Retrieve product reviews
-
-### Validation & Security
-
-* Request validation with Zod
-* Password hashing with bcrypt
-* JWT authentication middleware
-* Protected routes
-* Error handling middleware
-
----
-
-## Tech Stack
+- **React** – UI development
+- **Vite** – Development environment and build tool
+- **Tailwind CSS** – Styling and responsive design
+- **React Router** – Client-side routing
+- **Redux** – State management
+- **React Hot Toast** – Notifications
+- **Lucide React** – Icons
 
 ### Backend
 
-* Node.js
-* Express.js
+- **Node.js** – Runtime environment
+- **Express.js** – Backend framework
+- **Sequelize** – ORM
+- **PostgreSQL** – Relational database
+- **JWT** – Authentication
+- **bcrypt** – Password hashing
+- **CORS** – Cross-origin resource sharing
 
-### Database
+## 🏗️ Architecture
 
-* PostgreSQL
-* Sequelize ORM
-
-### Authentication
-
-* JSON Web Tokens (JWT)
-* bcrypt
-
-### Validation
-
-* Zod
-
----
-
-## Database Schema
-
-### Users
-
-Stores authentication and account information.
-
-### UserInfo
-
-Stores additional user profile information.
-
-### Products
-
-Stores product details.
-
-### Orders
-
-Stores customer orders.
-
-### OrderItems
-
-Stores products associated with each order.
-
-### Cart
-
-Stores customer carts.
-
-### CartItems
-
-Stores products currently in a cart.
-
-### Reviews
-
-Stores product reviews and ratings.
-
----
-
-## Entity Relationships
+E-buy follows a typical full-stack architecture:
 
 ```text
-User
- ├── UserInfo (1:1)
- ├── Cart (1:1)
- ├── Orders (1:M)
- └── Reviews (1:M)
+┌──────────────────────┐
+│      React + Vite    │
+│      Frontend        │
+└──────────┬───────────┘
+           │
+           │ HTTP / REST API
+           ▼
+┌──────────────────────┐
+│   Node.js + Express  │
+│      Backend         │
+└──────────┬───────────┘
+           │
+           │ Sequelize
+           ▼
+┌──────────────────────┐
+│     PostgreSQL       │
+│      Database        │
+└──────────────────────┘
+📁 Main Functionality
+Product Management
 
-Cart
- └── CartItems (1:M)
+Users can browse products using:
 
+Pagination
+Search
+Filtering
+Sorting
+
+Each product has its own details page where users can view information, reviews, and related functionality.
+
+Product Comparison
+
+Users can select products and compare them to make it easier to evaluate different products before purchasing.
+
+Shopping Cart & Orders
+
+Authenticated users can:
+
+Add products to their cart
+Review their cart
+Place an order
+View their previous orders
+Reviews
+
+Users can leave reviews on products and view reviews submitted by other users.
+
+Authentication
+
+Authentication is implemented using:
+
+JWT-based authentication
+Password hashing with bcrypt
+Protected API routes
+User/admin authorization
+Admin Dashboard
+
+Administrators can manage the store through dedicated functionality for:
+
+Users
 Products
- ├── CartItems (1:M)
- ├── OrderItems (1:M)
- └── Reviews (1:M)
-
 Orders
- └── OrderItems (1:M)
-```
 
----
+Admins can also update order statuses to keep track of the order lifecycle.
 
-## Project Structure
+⚙️ Installation
+Prerequisites
 
-```text
-src/
-├── utils/
-├── services/
-├── swagger/
-├── middlewares/
-├── models/
-├── relations.js
-├── routes/
-│   ├── auth.js
-│   ├── products.js
-│   ├── orders.js
-│   ├── cart.js
-│   └── reviews.js
-└── app.js
+Make sure you have installed:
 
-```
+Node.js
+PostgreSQL
+Git
+1. Clone the repository
+git clone https://github.com/giorgi583/e-commerce.git
+cd e-buy
+2. Install dependencies
 
----
+Install the frontend dependencies:
 
-## Installation
-
-### Clone the Repository
-
-```bash
-git clone <repository-url>
-cd ecommerce-backend
-```
-
-### Install Dependencies
-
-```bash
+cd client
 npm install
-```
 
-### Configure Environment Variables
+Install the backend dependencies:
 
-Create a `.env` file in the project root:
+cd ../server
+npm install
+3. Configure environment variables
 
-```env
-DB_NAME=your_database_name
-DB_USER=your_database_user
-DB_PASSWORD=your_database_password
-DB_HOST=localhost
-DB_PORT=5432
-
-JWT_SECRET=your_jwt_secret
-```
-
-### Start the Server
-
-Development:
-
-```bash
-npm run dev
-```
-
-Production:
-
-```bash
-npm start
-```
-
----
-
-## API Routes
-
-get information about routes on api-docs page
-
-## Authentication
-
-Protected endpoints require a valid JWT access token.
+Create a .env file in the backend directory.
 
 Example:
 
-```http
-Authorization: Bearer <access_token>
-```
+PORT=8080
 
----
 
-## Validation
+DATABASE_URL=your_postgresql_connection_string
 
-All incoming request data is validated using Zod schemas before reaching business logic.
 
-Example validations include:
+JWT_SECRET=your_jwt_secret
 
-* User registration
-* User login
-* Product creation
-* Order creation
-* Review creation
+Adjust the environment variables according to your database and application configuration.
 
----
+4. Start the backend
+cd server
+npm run dev
+5. Start the frontend
 
-## Error Handling
+In another terminal:
 
-The API returns standardized HTTP status codes:
+cd client
+npm run dev
 
-| Status Code | Description           |
-| ----------- | --------------------- |
-| 200         | Success               |
-| 201         | Resource Created      |
-| 400         | Validation Error      |
-| 401         | Unauthorized          |
-| 403         | Forbidden             |
-| 404         | Resource Not Found    |
-| 500         | Internal Server Error |
+The application should now be available at the local Vite development URL.
 
----
+📦 Dependencies
+Frontend
+react
+react-router-dom
+react-hot-toast
+redux
+lucide-react
+tailwindcss
+vite
+Backend
+node.js
+express
+sequelize
+postgresql
+bcrypt
+jsonwebtoken
+cors
+🔒 Security
 
-## Future Improvements
+The application includes several basic security-related mechanisms:
 
-* Refresh tokens
-* Password reset functionality
-* Email verification
-* Product image uploads
-* Wishlist support
-* Payment gateway integration
-* Order status notifications
+Password hashing using bcrypt
+JWT-based authentication
+Protected routes
+Role-based access for administrative functionality
+CORS configuration
+Database interaction through Sequelize
 
----
+This project was developed primarily for educational purposes and should not be considered production-ready without additional security auditing and hardening.
 
-## License
+📱 Responsive Design
 
-This project is intended for educational and portfolio purposes.
+The frontend is designed to work across different screen sizes using Tailwind CSS and responsive layouts.
+
+🎯 Project Goals
+
+The main goals of E-buy were to practice:
+
+Building a full-stack application
+Developing React components and interfaces
+Managing application state with Redux
+Creating REST APIs with Express
+Working with relational databases
+Using Sequelize as an ORM
+Implementing authentication and authorization
+Building search, filtering, sorting, and pagination
+Managing e-commerce functionality
+Creating responsive user interfaces
+🔮 Future Improvements
+
+Potential improvements include:
+
+Payment integration
+Image upload and storage
+Advanced product filtering
+Improved admin dashboard
+Email notifications
+Wishlist functionality
+Product stock management
+Improved validation and error handling
+Automated testing
+More advanced security measures
+📄 License
+
+This project was created for educational purposes.
