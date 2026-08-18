@@ -66,13 +66,13 @@ const AboutProduct = ({product}) => {
   <p className='text-sm'>{product.description}</p>
   </div>
   <div className='flex flex-col gap-4 border border-gray-300 rounded-3xl p-5'>
-  <div className='flex justify-between items-center border-b border-gray-300 p-3'>
+  <div className='flex justify-between items-center border-b border-gray-300 p-3 gap-2'>
   <div className='flex flex-col items-center'>
     <p className='text-2xl font-bold'>${product.discountedPrice || product.price}</p>
    { product.discountedPrice && <p className='line-through text-sm text-gray-500'>${product.price}</p>}
   </div>
   <div>
-    <div className='text-lg py-2 px-5 rounded bg-amber-100 text-green-600 flex items-center max-lg:text-base'><Check className='inline mr-2 size-5'/> Free Shipping</div>
+    <div className='text-lg py-2 px-5 max-sm:px-2 rounded bg-amber-100 text-green-600 flex items-center max-lg:text-base'><Check className='inline mr-2 size-5'/> Free Shipping</div>
   </div>
   </div>
   <div className='flex gap-10 items-center'>

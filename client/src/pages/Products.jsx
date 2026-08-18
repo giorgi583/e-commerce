@@ -75,7 +75,7 @@ useEffect(() => {
           <p onClick={() => {setSortingOpen(false); setSort('price'); setOrder('asc')}} className={`hover:bg-gray-50 cursor-pointer rounded-lg p-2 ${sort === 'price' && order === 'asc' ? 'bg-gray-100' : 'bg-white'}`}>Price: Low to High</p>
           <p onClick={() => {setSortingOpen(false); setSort('price'); setOrder('desc')}} className={`hover:bg-gray-50 cursor-pointer rounded-lg p-2 ${sort === 'price' && order === 'desc' ? 'bg-gray-100' : 'bg-white'}`}>Price: High to Low</p>
           </div>}
-          {showFilters && <div className='absolute top-[100%] right-[60%] w-full rounded-2xl z-20 bg-white'><Filters name={name} setName={setName} setCurrentPage={setCurrentPage} checkedCategories={checkedCategories} setCheckedCategories={setCheckedCategories} brand={brand} setBrand={setBrand} minPrice={minPrice} setMinPrice={setMinPrice} maxPrice={maxPrice} setMaxPrice={setMaxPrice}/></div>}
+          {showFilters && <div className='absolute top-[100%] right-[60%] w-full rounded-2xl z-20 bg-white max-[450px]:right-[25%]'><Filters name={name} setName={setName} setCurrentPage={setCurrentPage} checkedCategories={checkedCategories} setCheckedCategories={setCheckedCategories} brand={brand} setBrand={setBrand} minPrice={minPrice} setMinPrice={setMinPrice} maxPrice={maxPrice} setMaxPrice={setMaxPrice}/></div>}
         </div>
        </div>
         <div className='grid grid-cols-4 gap-4 max-xl:grid-cols-3 max-sm:grid-cols-2 max-[450px]:!grid-cols-1'>
